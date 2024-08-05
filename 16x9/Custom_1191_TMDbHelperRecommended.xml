@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<window type="window" id="1191">
+    <controls>
+
+   <!-- *script-embuary-video.xml*
+		* List control ID `10051` = All available information of the called item.
+		* List control ID `10052` = Cast
+		* List control ID `10053` = Similar titles
+		* List control ID `10054` = YouTube results
+		* List control ID `10055` = Backdrop images
+		* List control ID `10056` = Crew (for seasons it is used to display guest stars)
+		* List control ID `10057` = Collection items
+		* List control ID `10058` = Seasons
+		* List control ID `10059` = Poster images -->
+
+   		<control type="list" id="10051">	
+			<include>HiddenList</include>
+		</control>
+		<control type="list" id="10052">	
+			<include>HiddenList</include>
+		</control>
+		<control type="list" id="10053">	
+			<include>HiddenList</include>
+		</control>
+		<control type="list" id="10054">	
+			<include>HiddenList</include>
+		</control>
+		<control type="list" id="10055">	
+			<include>HiddenList</include>
+		</control>
+		<control type="list" id="10056">	
+			<include>HiddenList</include>
+		</control>
+		<control type="list" id="10057">	
+			<include>HiddenList</include>
+		</control>
+		<control type="list" id="10058">	
+			<include>HiddenList</include>
+		</control>
+		<control type="list" id="10059">	
+			<include>HiddenList</include>
+		</control>
+    </controls>
+</window>
