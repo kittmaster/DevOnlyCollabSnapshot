@@ -297,6 +297,19 @@
 		<value condition="Skin.String(BackgroundEffect.texture,easter)">$LOCALIZE[31149]</value>
 		<value>$LOCALIZE[231]</value>
 	</variable>
+		<variable name="ResolutionFlagUserLabelVar">
+		<value condition="Skin.String(BackgroundEffect.texture,flags/colored/videoresolution/1-Red)">$LOCALIZE[31191]</value>
+		<value condition="Skin.String(BackgroundEffect.texture,flags/colored/videoresolution/2-Orange)">$LOCALIZE[31189]</value>
+		<value condition="Skin.String(BackgroundEffect.texture,flags/colored/videoresolution/3-Green)">$LOCALIZE[31187]</value>
+		<value condition="Skin.String(BackgroundEffect.texture,flags/colored/videoresolution/4-Blue)">$LOCALIZE[31185]</value>
+		<value condition="Skin.String(BackgroundEffect.texture,flags/colored/videoresolution/5-Cyan)">$LOCALIZE[765]</value>
+		<value condition="Skin.String(BackgroundEffect.texture,flags/colored/videoresolution/6-Violet)">$LOCALIZE[31396]</value>
+		<value condition="Skin.String(BackgroundEffect.texture,flags/colored/videoresolution/7-Magenta)">$LOCALIZE[31397]</value>
+		<value condition="Skin.String(BackgroundEffect.texture,flags/colored/videoresolution/8-Yellow)">$LOCALIZE[743]</value>
+		<value condition="Skin.String(BackgroundEffect.texture,flags/colored/videoresolution/9-Turquoise)">$LOCALIZE[31398]</value>
+		<value condition="Skin.String(BackgroundEffect.texture,flags/colored/videoresolution/10-Brown)">$LOCALIZE[31399]</value>
+		<value>$LOCALIZE[231]</value>
+	</variable>
 	<variable name="BackgroundTextureColorVar">
 		<value condition="!String.IsEmpty(Skin.String(BackgroundTexture.color)) + !String.IsEqual(Skin.String(BackgroundTexture.color),None)">$INFO[Skin.String(BackgroundTexture.color)]</value>
 		<value>background</value>
@@ -362,6 +375,20 @@
 	</variable> -->
 	<!-- PARAM -->
 	<include name="CustomColorRadioButton">
+		<param name="ColorStringVar" />
+		<definition>
+			<width>1395</width>
+			<height>67</height>
+			<textoffsetx>35</textoffsetx>
+			<textureradioonfocus colordiffuse="$PARAM[ColorStringVar]">colors/white.png</textureradioonfocus>
+			<textureradioonnofocus colordiffuse="$PARAM[ColorStringVar]">colors/white.png</textureradioonnofocus>
+			<textureradioofffocus colordiffuse="$PARAM[ColorStringVar]">colors/white.png</textureradioofffocus>
+			<textureradiooffnofocus colordiffuse="$PARAM[ColorStringVar]">colors/white.png</textureradiooffnofocus>
+			<onclick condition="!System.AddonIsEnabled(script.skin.helper.colorpicker)">EnableAddon(script.skin.helper.colorpicker)</onclick>
+			<onclick condition="!System.HasAddon(script.skin.helper.colorpicker)">InstallAddon(script.skin.helper.colorpicker)</onclick>
+		</definition>
+	</include>
+		<include name="CustomColorRadioButtonIcons">
 		<param name="ColorStringVar" />
 		<definition>
 			<width>1395</width>

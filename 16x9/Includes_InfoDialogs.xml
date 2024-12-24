@@ -4,6 +4,7 @@
 		<param name="blur"/>
 		<param name="art"/>
 		<definition>
+			<!-- Fanart Background -->
 			<control type="image">
 				<include>AnimationWindowFade</include>
 				<fadetime>TextureFadeTime</fadetime>
@@ -108,7 +109,14 @@
 				<textcolor>$VAR[PanelTextColorVar]</textcolor>
 				<scroll>true</scroll>
 			</control>
-			<!-- Subtitle -->
+			
+			<!-- Define the hidden list -->
+			<control type="list" id="10051">
+				<!-- <content>plugin://plugin.video.themoviedb.helper?info=collection&amp;tmdb_id=$INFO[Window(Home).Property(MovieInfoPath)]</content> -->
+				<content>plugin://plugin.video.themoviedb.helper?info=collection&amp;type=collection&amp;tmdb_id=$INFO[Window(Home).Property(MovieInfoPath)]</content>
+			</control>
+			
+			<!-- Subtitle Control -->
 			<control type="label">
 				<top>52</top>
 				<height>40</height>
@@ -117,11 +125,13 @@
 				<textcolor>$VAR[PanelHighlightColorVar]</textcolor>
 				<scroll>true</scroll>
 			</control>
+			
 			<!-- Info line -->
 			<control type="group">
 				<top>105</top>
 				<include>VideoInfoLine</include>
 			</control>
+			<!-- Separator -->
 			<control type="image">
 				<top>152</top>
 				<height>4</height>
@@ -133,6 +143,7 @@
 				<height>40</height>
 				<usecontrolcoords>true</usecontrolcoords>
 				<orientation>horizontal</orientation>
+				<visible>!String.IsEqual(ListItem.Property(item.type),person)</visible>
 				<control type="image">
 					<top>3</top>
 					<width>30</width>
@@ -161,6 +172,7 @@
 				<onup condition="Container(9000).Hasfocus(109)">SetFocus(1090)</onup>
 				<onup condition="Container(9000).Hasfocus(112)">SetFocus(9002,7)</onup>
 				<include>InfoDialogButtons</include>
+				<visible>!String.IsEqual(ListItem.Property(item.type),person)</visible>
 				<content>
 					<item id="101">
 						<description>Play</description>
@@ -181,9 +193,7 @@
 						<visible>!String.IsEmpty(ListItem.Trailer) + !Skin.HasSetting(VideoInfoDisableTrailer)</visible>
 						<label></label>
 						<label2>$LOCALIZE[20410]</label2>
-						<!-- <onclick>RunScript(script.embuary.helper,action=playitem,item='$ESCINFO[ListItem.Trailer]')</onclick> -->
-						<onclick>PlayMedia($INFO[Window(Home).Property(TMDbHelper.ListItem.Trailer)])</onclick>
-						<onclick>Runscript(plugin.video.themoviedb.helper,recommendations=onaction,builtin=Action(Close),window_id=1191)</onclick>	
+						<onclick>RunScript(script.embuary.helper,action=playitem,item='$ESCINFO[ListItem.Trailer]')</onclick>
 					</item>
 					<item id="101">
 						<description>Browse</description>
@@ -194,15 +204,16 @@
 					</item>
 					<item id="101">
 						<description>TMDb info</description>
-						<visible>Skin.HasSetting(VideoInfoTMDb)</visible>
+						<!-- <visible>Skin.HasSetting(VideoInfoTMDb)</visible> -->
 						<label></label>
 						<label2>[CAPITALIZE]$LOCALIZE[31351][/CAPITALIZE]</label2>
 						<!-- <onclick>Dialog.Close(all)</onclick> -->
-						<!-- <onclick>$VAR[VideoInfoTMDbVar]</onclick>	 -->
-
-						<onclick>Runscript(plugin.video.themoviedb.helper,recommendations=$VAR[recContainerList],window_id=1191,tmdb_type=$VAR[recMediaType],$VAR[recQuery],$VAR[recYear])</onclick>						 
-
-						<!-- 5000 Cast / Play Button | 5001 Crew | 5002 Set | 5003 Similiar | 5004 Videos | 5005 Info -->
+						<!-- <onclick>$VAR[VideoInfoTMDbVar]</onclick> -->
+						<onclick>Runscript(plugin.video.themoviedb.helper,recommendations=10051|info=details|true|info||10052|info=cast|true|info||10053|info=similar|true|play||10054|info=videos|true|play||10056|info=crew|true|info||10057|info=collection|true|play||10060|info=recommendations|true|info||10061|info=similar|true|info,window_id=1191,$VAR[TMDbHelperTypeVar],$VAR[TMDbHelperIDVar],winprop_plot='"$VAR[VideoInfoPlotVar]"',winprop_poster=$VAR[VideoInfoPosterVar])</onclick>
+						<!-- <onclick>Runscript(plugin.video.themoviedb.helper,recommendations=5000|info=recommendations|true|info||5001|info=similar|true|info||10057|info=collection|true|info,window_id=1191,$VAR[TMDbHelperTypeVar],$VAR[TMDbHelperIDVar],winprop_plot='"$VAR[VideoInfoPlotVar]"',winprop_poster=$VAR[VideoInfoPosterVar])</onclick> -->
+						<!-- <onclick>RunScript(plugin.video.themoviedb.helper,add_query=$INFO[ListItem.Label],$VAR[TMDbHelperTypeVar],call_auto=1190)</onclick> -->
+						<!-- <value condition="$EXP[isMovie]">10051|info=details|true|info||10052|info=cast|true|info||10053|info=similar|true|play||10054|info=videos|true|play||10056|info=crew|true|info||10057|info=collection|true|play</value> -->
+						<!-- <onclick>Runscript(plugin.video.themoviedb.helper,recommendations=$VAR[recContainerList],window_id=1191,tmdb_type=$VAR[recMediaType],$VAR[recQuery],$VAR[recYear])</onclick> -->
 					</item>
 					<item id="104">
 						<description>Next episode</description>
@@ -282,9 +293,8 @@
 				<top>211</top>
 				<!-- Cast -->
 				<control type="panel" id="50">
-					<onup condition="!Skin.HasSetting(VideoInfoTMDbActor)">1020</onup>
-					<!-- <onup condition="Skin.HasSetting(VideoInfoTMDbActor)">RunScript(script.embuary.info,call=person,query='"$ESCINFO[Container(50).ListItem.Label]"')</onup> -->
-					<onup condition="Skin.HasSetting(VideoInfoTMDbActor)">RunScript(plugin.video.themoviedb.helper,info=person,query="$INFO[Container(50).ListItem.Label]")</onup>
+					<onup condition="!System.AddonIsEnabled(plugin.video.themoviedb.helper)">1020</onup>
+					<onup condition="System.AddonIsEnabled(plugin.video.themoviedb.helper)">RunScript(plugin.video.themoviedb.helper,add_query=$INFO[Container.ListItem.Label],type=person,call_auto=1190)</onup>
 					<include content="DialogExtraInfo">
 						<param name="visible">!Control.HasFocus(1020) + Container(9000).HasFocus(101)</param>
 						<param name="aspect">scale</param>
@@ -293,12 +303,12 @@
 				</control>
 				<!-- Actor movies/tv shows -->
 				<control type="panel" id="1020">
-			   <!-- <onclick condition="String.IsEqual(Container(1020).ListItem.DBTYPE,movie)">RunScript(script.embuary.helper,action=playitem,item='$ESCINFO[ListItem.Filenameandpath]')</onclick> -->
+					<!-- <onclick condition="String.IsEqual(Container(1020).ListItem.DBTYPE,movie)">RunScript(script.embuary.helper,action=playitem,item='$ESCINFO[ListItem.Filenameandpath]')</onclick> -->
 					<onclick condition="String.IsEqual(Container(1020).ListItem.DBTYPE,movie)">RunScript(plugin.video.themoviedb.helper,action=play,info="$INFO[ListItem.Filenameandpath]")</onclick>
-
-			   <!-- <onclick condition="!String.IsEqual(Container(1020).ListItem.DBTYPE,movie)">RunScript(script.embuary.helper,action=goto,path='$ESCINFO[ListItem.FolderPath]',target=videos)</onclick> -->
-			   		<onclick condition="!String.IsEqual(Container(1020).ListItem.DBTYPE,movie)">RunScript(plugin.video.themoviedb.helper,action=goto,path="$INFO[ListItem.FolderPath]")</onclick>
-
+					
+					<!-- <onclick condition="!String.IsEqual(Container(1020).ListItem.DBTYPE,movie)">RunScript(script.embuary.helper,action=goto,path='$ESCINFO[ListItem.FolderPath]',target=videos)</onclick> -->
+					<onclick condition="!String.IsEqual(Container(1020).ListItem.DBTYPE,movie)">RunScript(plugin.video.themoviedb.helper,action=goto,path="$INFO[ListItem.FolderPath]")</onclick>
+					
 					<ondown>50</ondown>
 					<include content="DialogExtraInfo">
 						<param name="visible">Control.HasFocus(1020)</param>
@@ -311,9 +321,9 @@
 				<!-- Next up -->
 				<control type="panel" id="1040">
 					<visible>Integer.IsGreater(ListItem.Property(UnwatchedEpisodes),0) + Integer.IsGreater(ListItem.DBID,0)</visible>		
-			   <!-- <onclick>RunScript(script.embuary.helper,action=playitem,item='$ESCINFO[ListItem.Filenameandpath]')</onclick> -->
+					<!-- <onclick>RunScript(script.embuary.helper,action=playitem,item='$ESCINFO[ListItem.Filenameandpath]')</onclick> -->
 					<onclick>RunScript(plugin.video.themoviedb.helper,action=play,info="$INFO[ListItem.Filenameandpath]")</onclick>
-
+					
 					<include content="DialogExtraInfo">
 						<param name="visible">Control.HasFocus(1040) | Container(9000).HasFocus(104)</param>
 						<param name="labelvisible">true</param>
@@ -327,9 +337,9 @@
 				<!-- Seasons -->
 				<control type="panel" id="1050">
 					<visible>String.IsEqual(ListItem.DBTYPE,tvshow)</visible>
-			   <!-- <onclick>RunScript(script.embuary.helper,action=goto,path='$ESCINFO[ListItem.FolderPath]',target=videos)</onclick> -->
+					<!-- <onclick>RunScript(script.embuary.helper,action=goto,path='$ESCINFO[ListItem.FolderPath]',target=videos)</onclick> -->
 					<onclick>RunScript(plugin.video.themoviedb.helper,action=goto,path="$INFO[ListItem.FolderPath]")</onclick>					
-
+					
 					<include content="DialogExtraInfo">
 						<param name="visible">Control.HasFocus(1050) | Container(9000).HasFocus(105)</param>
 						<param name="art">$VAR[PosterVar]</param>
@@ -342,7 +352,7 @@
 					<visible>!String.IsEmpty(ListItem.SetID)</visible>
 					<!-- <onclick>RunScript(script.embuary.helper,action=playitem,item='$ESCINFO[ListItem.Filenameandpath]')</onclick> -->
 					<onclick>RunScript(plugin.video.themoviedb.helper,action=play,info="$INFO[ListItem.Filenameandpath]")</onclick>
-
+					
 					<include content="DialogExtraInfo">
 						<param name="visible">Control.HasFocus(1060) | Container(9000).HasFocus(106)</param>
 						<param name="art">$VAR[PosterVar]</param>
@@ -360,9 +370,10 @@
 						<param name="art">$VAR[PosterVar]</param>
 						<param name="overlayiconvisible">true</param>
 					</include>
-					<!-- <content sortby="year" sortorder="descending">plugin://script.embuary.helper/?info=getdirectedby&amp;dbid=$INFO[ListItem.DBID]</content> -->
-					<content sortby="year" sortorder="descending">plugin://plugin.video.themoviedb.helper/?info=discover&amp;type=movie&amp;with_crew=$INFO[ListItem.Property(tmdb_id)]</content>
-
+					<content sortby="year" sortorder="descending">plugin://script.embuary.helper/?info=getdirectedby&amp;dbid=$INFO[ListItem.DBID]</content>
+					<!-- <content sortby="year" sortorder="descending">plugin://plugin.video.themoviedb.helper/?info=discover&amp;type=movie&amp;with_crew=$INFO[ListItem.Property(tmdb_id)]</content> -->
+					<!--TODO-->
+					
 					
 				</control>
 				<!-- Writer -->
@@ -375,14 +386,14 @@
 						<param name="art">$VAR[PosterVar]</param>
 						<param name="overlayiconvisible">true</param>
 					</include>
-				   <content sortby="year" sortorder="descending">plugin://script.embuary.helper/?info=getbyargs&amp;filter_args=%7B%22and%22%3A%20%5B%7B%22or%22%3A%20%5B%7B%22operator%22%3A%20%22is%22%2C%20%22field%22%3A%20%22writers%22%2C%20%22value%22%3A%20%22$INFO[Window(home).Property(Writer.0)]%22%7D%2C%7B%22operator%22%3A%20%22is%22%2C%20%22field%22%3A%20%22writers%22%2C%20%22value%22%3A%20%22$INFO[Window(home).Property(Writer.1)]%22%7D%5D%7D%2C%20%7B%22operator%22%3A%20%22isnot%22%2C%20%22field%22%3A%20%22title%22%2C%20%22value%22%3A%20%22$INFO[Window(home).Property(TitleEncoded)]%22%7D%5D%7D&amp;type=movie</content>
-						<!-- <content sortby="year" sortorder="descending">plugin://plugin.video.themoviedb.helper/?info=getbyargs&amp;filter_args=%7B%22and%22%3A%5B%7B%22or%22%3A%5B%7B%22operator%22%3A%22is%22%2C%22field%22%3A%22writers%22%2C%22value%22%3A%22$INFO[Window(home).Property(Writer.0)]%22%7D%2C%7B%22operator%22%3A%22is%22%2C%22field%22%3A%22writers%22%2C%22value%22%3A%22$INFO[Window(home).Property(Writer.1)]%22%7D%5D%7D%2C%7B%22operator%22%3A%22isnot%22%2C%22field%22%3A%22title%22%2C%22value%22%3A%22$INFO[Window(home).Property(TitleEncoded)]%22%7D%5D%7D&amp;type=movie</content> -->
+					<content sortby="year" sortorder="descending">plugin://script.embuary.helper/?info=getbyargs&amp;filter_args=%7B%22and%22%3A%20%5B%7B%22or%22%3A%20%5B%7B%22operator%22%3A%20%22is%22%2C%20%22field%22%3A%20%22writers%22%2C%20%22value%22%3A%20%22$INFO[Window(home).Property(Writer.0)]%22%7D%2C%7B%22operator%22%3A%20%22is%22%2C%20%22field%22%3A%20%22writers%22%2C%20%22value%22%3A%20%22$INFO[Window(home).Property(Writer.1)]%22%7D%5D%7D%2C%20%7B%22operator%22%3A%20%22isnot%22%2C%20%22field%22%3A%20%22title%22%2C%20%22value%22%3A%20%22$INFO[Window(home).Property(TitleEncoded)]%22%7D%5D%7D&amp;type=movie</content>
+					<!-- <content sortby="year" sortorder="descending">plugin://plugin.video.themoviedb.helper/?info=getbyargs&amp;filter_args=%7B%22and%22%3A%5B%7B%22or%22%3A%5B%7B%22operator%22%3A%22is%22%2C%22field%22%3A%22writers%22%2C%22value%22%3A%22$INFO[Window(home).Property(Writer.0)]%22%7D%2C%7B%22operator%22%3A%22is%22%2C%22field%22%3A%22writers%22%2C%22value%22%3A%22$INFO[Window(home).Property(Writer.1)]%22%7D%5D%7D%2C%7B%22operator%22%3A%22isnot%22%2C%22field%22%3A%22title%22%2C%22value%22%3A%22$INFO[Window(home).Property(TitleEncoded)]%22%7D%5D%7D&amp;type=movie</content> -->
 					
 				</control>
 				<!-- Similar -->
 				<control type="panel" id="1090">
 					<visible>!String.IsEqual(ListItem.DBTYPE,episode)</visible>
-			   <!-- <onclick>RunScript(script.embuary.helper,action=playitem,item='$ESCINFO[ListItem.Filenameandpath]')</onclick> -->
+					<!-- <onclick>RunScript(script.embuary.helper,action=playitem,item='$ESCINFO[ListItem.Filenameandpath]')</onclick> -->
 					<onclick>RunScript(plugin.video.themoviedb.helper,action=play,info="$INFO[ListItem.Filenameandpath]")</onclick>
 					<include content="DialogExtraInfo">
 						<param name="visible">Control.HasFocus(1090) | Container(9000).HasFocus(109)</param>
@@ -392,86 +403,204 @@
 					<content sortby="year" sortorder="descending">$VAR[VideoInfoSimilarContent]</content>
 				</control>
 			</control>
-			<!-- Info -->
+			<!-- ********************************************************************************************************************************************************* -->
+			<!-- Person Info -->
 			<control type="panel" id="9002">
 				<include content="InfoDialogDetails">
-					<param name="visible">Container(9000).HasFocus(112)</param>
+					<param name="visible">Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</param>
 					<param name="label">$INFO[ListItem.Label]</param>
 					<param name="label2">$INFO[ListItem.Label2]</param>
 				</include>
+				<!-- Onup event for handling actors -->
+				<onup>RunScript(plugin.video.themoviedb.helper,add_query=$INFO[ListItem.awards],type=person,call_auto=1190)</onup>
+				<!-- <onup>RunScript(plugin.video.themoviedb.helper,action=get_awards,query=$INFO[ListItem.label],type=person,call_auto=1190)</onup> -->
 				<content>
+<!-- 					<item>
+						<label>$INFO[ListItem.Property(Age),, $LOCALIZE[31392]]</label>
+						<label2>$LOCALIZE[31393]:</label2>
+						<visible>!String.IsEmpty(ListItem.Property(Age))</visible>
+					</item> -->
+<!-- 					<item>
+						<label>$INFO[ListItem.Property(Birthday)]</label>
+						<label2>$LOCALIZE[32019]:</label2>
+						<visible>!String.IsEmpty(ListItem.Property(Birthday))</visible>
+					</item> -->
+<!-- 					<item>
+						<label>$INFO[ListItem.Property(Deathday)]</label>
+						<label2>$LOCALIZE[21897]:</label2>
+						<visible>!String.IsEmpty(ListItem.Property(Deathday))</visible>
+					</item> -->
+<!-- 					<item>
+						<label>$INFO[ListItem.Property(Born)]</label>
+						<label2>$LOCALIZE[21893]:</label2>
+						<visible>!String.IsEmpty(ListItem.Property(Born))</visible>
+					</item> -->
 					<item>
-						<visible>!String.IsEmpty(ListItem.Genre) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)]</visible>
-						<label>$INFO[ListItem.Genre]</label>
-						<label2>$LOCALIZE[515]</label2>
-					</item>
-					<item>
-						<visible>!String.IsEmpty(ListItem.Studio)</visible>
-						<label>$INFO[ListItem.Studio]</label>
-						<label2>$LOCALIZE[572]</label2>
-					</item>
-					<item id="90031">
-						<visible>!String.IsEmpty(ListItem.Director)</visible>
-						<label>$INFO[ListItem.Director]</label>
-						<label2>$LOCALIZE[20339]</label2>
-					</item>
-					<item id="2">
-						<visible>!String.IsEmpty(ListItem.Writer)</visible>
-						<label>$INFO[ListItem.Writer]</label>
-						<label2>$LOCALIZE[20417]</label2>
-					</item>
-					<item>
-						<visible>!String.IsEmpty(ListItem.Country)</visible>
-						<label>$INFO[ListItem.Country]</label>
-						<label2>$LOCALIZE[574]</label2>
-					</item>
-					<item>
-						<visible>!String.IsEmpty(ListItem.OriginalTitle) + !String.IsEqual(ListItem.OriginalTitle,ListItem.Title)</visible>
-						<label>$INFO[ListItem.OriginalTitle]</label>
-						<label2>$LOCALIZE[20376]</label2>
+						<label>$INFO[ListItem.Property(Gender)]</label>
+						<label2>$LOCALIZE[39025]:</label2>
+						<visible>!String.IsEmpty(ListItem.Property(Gender))</visible>
 					</item>
 					<item>
-						<visible>!String.IsEmpty(ListItem.Property(AudioLanguage.1))</visible>
-						<label>[UPPERCASE]$INFO[ListItem.Property(AudioLanguage.1)]$INFO[ListItem.Property(AudioLanguage.2), / ]$INFO[ListItem.Property(AudioLanguage.3), / ]$INFO[ListItem.Property(AudioLanguage.4), / ]$INFO[ListItem.Property(AudioLanguage.5), / ]$INFO[ListItem.Property(AudioLanguage.6), / ]$INFO[ListItem.Property(AudioLanguage.7), / ][/UPPERCASE]</label>
-						<label2>$LOCALIZE[292]</label2>
+						<label>$INFO[ListItem.Property(Character)]</label>
+						<label2>$LOCALIZE[31388]:</label2>
+						<visible>!String.IsEmpty(ListItem.Property(Character))</visible>
 					</item>
 					<item>
-						<visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.1))</visible>
-						<label>[UPPERCASE]$INFO[ListItem.Property(SubtitleLanguage.1)]$INFO[ListItem.Property(SubtitleLanguage.2), / ]$INFO[ListItem.Property(SubtitleLanguage.3), / ]$INFO[ListItem.Property(SubtitleLanguage.4), / ]$INFO[ListItem.Property(SubtitleLanguage.5), / ]$INFO[ListItem.Property(SubtitleLanguage.6), / ]$INFO[ListItem.Property(SubtitleLanguage.7), / ]$INFO[ListItem.Property(SubtitleLanguage.8), / ]$INFO[ListItem.Property(SubtitleLanguage.9), / ]$INFO[ListItem.Property(SubtitleLanguage.10), / ]$INFO[ListItem.Property(SubtitleLanguage.11), / ]$INFO[ListItem.Property(SubtitleLanguage.12), / ]$INFO[ListItem.Property(SubtitleLanguage.13), / ]$INFO[ListItem.Property(SubtitleLanguage.14), / ]$INFO[ListItem.Property(SubtitleLanguage.15), / ][/UPPERCASE]</label>
-						<label2>$LOCALIZE[287]</label2>
+						<label>$INFO[ListItem.Property(Department)]</label>
+						<label2>$LOCALIZE[31389]:</label2>
+						<visible>!String.IsEmpty(ListItem.Property(Department))</visible>
 					</item>
 					<item>
-						<visible>!String.IsEmpty(ListItem.Tag)</visible>
-						<label>$INFO[ListItem.Tag]</label>
-						<label2>$LOCALIZE[20459]</label2>
+						<label>$INFO[ListItem.Property(Job)]</label>
+						<label2>$LOCALIZE[31390]:</label2>
+						<visible>!String.IsEmpty(ListItem.Property(Job))</visible>
+					</item>								
+					<item>
+						<label>$INFO[ListItem.Property(Role)]</label>
+						<label2>$LOCALIZE[38033]:</label2>
+						<visible>!String.IsEmpty(ListItem.Property(Role))</visible>
 					</item>
 					<item>
-						<visible>!String.IsEmpty(ListItem.DateAdded)</visible>
-						<label>$INFO[ListItem.DateAdded]</label>
-						<label2>$LOCALIZE[570]</label2>
+						<label>$INFO[ListItem.Property(awards)]</label>
+						<label2>$LOCALIZE[31113]:</label2>
+						<!-- <visible>!String.IsEmpty(ListItem.Property(awards))</visible> -->
+					</item>		
+					
+<!-- 					<item>
+						<label>$INFO[Container(50).ListItem.Property(awards)</label>
+						<label2>$LOCALIZE[31113]:</label2>
+						<visible>!String.IsEmpty(Container(50).ListItem.Property(awards))</visible>
+					</item> -->
+
+					<!-- Person Social Icons ************************************************************** -->
+					<!-- Facebook -->					
+					<item>
+						<label>$INFO[ListItem.Property(facebook_id),, ]</label>
+						<label2>Facebook:</label2>
+						<visible>!String.IsEmpty(ListItem.Property(facebook_id))</visible>
 					</item>
 					<item>
-						<visible>!String.IsEmpty(ListItem.PlayCount)</visible>
-						<label>$INFO[ListItem.PlayCount]</label>
-						<label2>$LOCALIZE[567]</label2>
+						<label>$INFO[ListItem.Property(instagram_id),, ]</label>
+						<label2>Instagram:</label2>
+						<visible>!String.IsEmpty(ListItem.Property(instagram_id))</visible>
 					</item>
 					<item>
-						<visible>!String.IsEmpty(ListItem.LastPlayed)</visible>
-						<label>$INFO[ListItem.LastPlayed]</label>
-						<label2>$LOCALIZE[568]</label2>
+						<label>$INFO[ListItem.Property(twitter_id),, ]</label>
+						<label2>X (Twitter):</label2>
+						<visible>!String.IsEmpty(ListItem.Property(twitter_id))</visible>
 					</item>
 					<item>
-						<visible>!String.IsEmpty(ListItem.Path)</visible>
-						<label>$INFO[ListItem.Path]</label>
-						<label2>$LOCALIZE[573]</label2>
+						<label>$INFO[ListItem.Property(tiktok_id),, ]</label>
+						<label2>TikTok:</label2>
+						<visible>!String.IsEmpty(ListItem.Property(tiktok_id))</visible>
 					</item>
 					<item>
-						<visible>!String.IsEmpty(ListItem.Filename)</visible>
-						<label>$INFO[ListItem.Filename]</label>
-						<label2>$LOCALIZE[21800]</label2>
-					</item>
-				</content>
+						<label>$INFO[ListItem.Property(youtube_id),, ]</label>
+						<label2>YouTube:</label2>
+						<visible>!String.IsEmpty(ListItem.Property(youtube_id))</visible>
+					</item>	
+					
+					
+					<!-- 					<item>
+										<visible>!String.IsEmpty(ListItem.Genre) + [String.IsEqual(ListItem.DBType,movie) | String.IsEqual(ListItem.DBType,episode) | String.IsEqual(ListItem.DBType,musicvideo)]</visible>
+										<label>$INFO[ListItem.Genre]</label>
+										<label2>$LOCALIZE[515]:</label2>
+										</item> -->
+					<!-- 					<item>
+										<visible>!String.IsEmpty(ListItem.Studio)</visible>
+										<label>$INFO[ListItem.Studio]</label>
+										<label2>$LOCALIZE[572]:</label2>
+										</item> -->
+					<!-- 					<item id="90031">
+										<visible>!String.IsEmpty(ListItem.Director)</visible>
+										<label>$INFO[ListItem.Director]</label>
+										<label2>$LOCALIZE[20339]:</label2>
+										</item> -->
+					<!-- 					<item id="2">
+										<visible>!String.IsEmpty(ListItem.Writer)</visible>
+										<label>$INFO[ListItem.Writer]</label>
+										<label2>$LOCALIZE[20417]:</label2>
+										</item> -->
+					<!-- 					<item>
+										<visible>!String.IsEmpty(ListItem.Property(Budget))</visible>
+										<label>$INFO[ListItem.Property(Budget),$]</label>
+										<label2>$LOCALIZE[32013]:</label2>
+										</item> -->
+					<!-- 					<item>
+										<visible>!String.IsEmpty(ListItem.Country)</visible>
+										<label>$INFO[ListItem.Country]</label>
+										<label2>$LOCALIZE[574]:</label2>
+										</item> -->
+					<!-- 					<item>
+										<visible>!String.IsEmpty(ListItem.OriginalTitle) + !String.IsEqual(ListItem.OriginalTitle,ListItem.Title)</visible>
+										<label>$INFO[ListItem.OriginalTitle]</label>
+										<label2>$LOCALIZE[20376]:</label2>
+										</item> -->
+					<!-- 					<item>
+										<visible>!String.IsEmpty(ListItem.Property(AudioLanguage.1))</visible>
+										<label>[UPPERCASE]$INFO[ListItem.Property(AudioLanguage.1)]$INFO[ListItem.Property(AudioLanguage.2), / ]$INFO[ListItem.Property(AudioLanguage.3), / ]$INFO[ListItem.Property(AudioLanguage.4), / ]$INFO[ListItem.Property(AudioLanguage.5), / ]$INFO[ListItem.Property(AudioLanguage.6), / ]$INFO[ListItem.Property(AudioLanguage.7), / ][/UPPERCASE]</label>
+										<label2>$LOCALIZE[292]:</label2>
+										</item> -->
+					<!-- 					<item>
+										<visible>!String.IsEmpty(ListItem.Property(SubtitleLanguage.1))</visible>
+										<label>[UPPERCASE]$INFO[ListItem.Property(SubtitleLanguage.1)]$INFO[ListItem.Property(SubtitleLanguage.2), / ]$INFO[ListItem.Property(SubtitleLanguage.3), / ]$INFO[ListItem.Property(SubtitleLanguage.4), / ]$INFO[ListItem.Property(SubtitleLanguage.5), / ]$INFO[ListItem.Property(SubtitleLanguage.6), / ]$INFO[ListItem.Property(SubtitleLanguage.7), / ]$INFO[ListItem.Property(SubtitleLanguage.8), / ]$INFO[ListItem.Property(SubtitleLanguage.9), / ]$INFO[ListItem.Property(SubtitleLanguage.10), / ]$INFO[ListItem.Property(SubtitleLanguage.11), / ]$INFO[ListItem.Property(SubtitleLanguage.12), / ]$INFO[ListItem.Property(SubtitleLanguage.13), / ]$INFO[ListItem.Property(SubtitleLanguage.14), / ]$INFO[ListItem.Property(SubtitleLanguage.15), / ][/UPPERCASE]</label>
+										<label2>$LOCALIZE[287]:</label2>
+										</item>
+										<item> -->
+					<!-- 						<visible>!String.IsEmpty(ListItem.Tag)</visible>
+										<label>$INFO[ListItem.Tag]</label>
+										<label2>$LOCALIZE[20459]:</label2>
+										</item> -->
+					<!-- 					<item>
+										<visible>!String.IsEmpty(ListItem.DateAdded)</visible>
+										<label>$INFO[ListItem.DateAdded]</label>
+										<label2>$LOCALIZE[570]:</label2>
+										</item> -->
+					<!-- 					<item>
+										<visible>!String.IsEmpty(ListItem.PlayCount)</visible>
+										<label>$INFO[ListItem.PlayCount]</label>
+										<label2>$LOCALIZE[567]:</label2>
+										</item> -->
+					<!-- 					<item>
+										<visible>!String.IsEmpty(ListItem.LastPlayed)</visible>
+										<label>$INFO[ListItem.LastPlayed]</label>
+										<label2>$LOCALIZE[568]:</label2>
+										</item> -->
+					<!-- 					<item>
+										<visible>!String.IsEmpty(ListItem.Path)</visible>
+										<label>$INFO[ListItem.Path]</label>
+										<label2>$LOCALIZE[573]:</label2>
+										</item> -->
+					<!-- 					<item>
+										<visible>!String.IsEmpty(ListItem.Filename)</visible>
+										<label>$INFO[ListItem.Filename]</label>
+										<label2>$LOCALIZE[21800]:</label2>
+										</item> -->
+										
+							</content>
 			</control>
+			
+
+			<!-- 			<control type="image">
+								<visible>!ControlGroup(9001).HasFocus + String.IsEqual(ListItem.Property(item.type), person)</visible>
+								<top>600</top>
+								<height>4</height>
+								<texture border="0,0,220,0" colordiffuse="$VAR[PanelListSeparatorColorVar]">panels/separator.png</texture>
+								</control> -->
+			
+			<!-- Plot (Used for Person's Biography) -->
+			<control type="textbox">
+				<visible>String.IsEmpty(Control.GetLabel(200))</visible>
+				<top>815</top>
+				<!-- <bottom>125</bottom> -->
+				<bottom>26</bottom>
+				<include>AutoScrollPlot</include>
+				<label>$VAR[VideoInfoPlotVar]</label>
+			</control>
+
+			<!-- Person Info End -->			
+			<!-- *********************************************************************************************************************************** -->			
+			
 			<!-- Plot -->
 			<control type="textbox">
 				<visible>!String.IsEmpty(Control.GetLabel(200))</visible>
@@ -481,13 +610,9 @@
 				<include>AutoScrollPlot</include>
 				<label>$VAR[VideoInfoPlotVar]</label>
 			</control>
-			<control type="textbox">
-				<visible>String.IsEmpty(Control.GetLabel(200))</visible>
-				<top>644</top>
-				<bottom>125</bottom>
-				<include>AutoScrollPlot</include>
-				<label>$VAR[VideoInfoPlotVar]</label>
-			</control>
+			
+			
+			
 			<!-- Media flags-->
 			<include>MediaFlagsVideoInfo</include>
 		</control>
@@ -655,7 +780,7 @@
 						<onclick>Close</onclick>
 						<!-- <onclick>RunScript(script.embuary.helper,action=playall,id=50)</onclick> -->
 						<onclick>RunScript(plugin.video.themoviedb.helper,action=play,playlistid=50)</onclick>
-
+						
 					</item>
 					<item id="103">
 						<description>Play song</description>
@@ -681,7 +806,7 @@
 						<onclick>Close</onclick>
 						<!-- <onclick>RunScript(script.embuary.helper,action=playall,id=1090)</onclick> -->
 						<onclick>RunScript(plugin.video.themoviedb.helper,action=play,playlistid=1090)</onclick>
-
+						
 					</item>
 					<item id="106">
 						<description>Albums</description>
@@ -705,7 +830,7 @@
 						<onclick>Close</onclick>
 						<!-- <onclick>RunScript(script.embuary.helper,action=playall,id=1090)</onclick> -->
 						<onclick>RunScript(plugin.video.themoviedb.helper,action=play,playlistid=1090)</onclick>
-
+						
 					</item>
 					<item id="112">
 						<description>Rate</description>
@@ -1305,14 +1430,6 @@
 					<height>90</height>
 					<texture border="5">panels/art-overlay.png</texture>
 				</control>
-				<control type="image">
-					<visible>$PARAM[labelvisible]</visible>
-					<left>10</left>
-					<right>10</right>
-					<bottom>10</bottom>
-					<height>90</height>
-					<texture border="5">panels/art-overlay.png</texture>						
-				</control>
 				<control type="label">
 					<visible>$PARAM[labelvisible]</visible>
 					<left>15</left>
@@ -1518,14 +1635,16 @@
 				<textcolor>$VAR[PanelTextColorVar]</textcolor>
 				<label>$VAR[ViewInfoTimeVar]</label>
 			</control>
-			<control type="image">
-				<visible>!String.IsEmpty(Control.GetLabel(5303))</visible>
+			<control type="image"> <!--Star for rating icon-->
+				<!-- <visible>!String.IsEmpty(Control.GetLabel(5303))</visible> -->
+				<visible>!String.IsEmpty(Control.GetLabel(5303)) + !String.IsEqual(ListItem.Property(item.type),person)</visible>				
 				<top>3</top>
 				<width>30</width>
 				<aspectratio>keep</aspectratio>
 				<texture>$VAR[IconPathVar]star.png</texture>
 			</control>
-			<control type="label" id="5303">
+			<control type="label" id="5303">  <!--Rating numerical value-->
+				<visible>!String.IsEmpty(Control.GetLabel(5303)) + !String.IsEqual(ListItem.Property(item.type),person)</visible>
 				<width>auto</width>
 				<font>Font30_Reg</font>
 				<textcolor>$VAR[PanelTextColorVar]</textcolor>
@@ -1622,6 +1741,190 @@
 				<textcolor>$VAR[PanelTextColorVar]</textcolor>
 				<label>$VAR[ViewInfoTop250Var]</label>
 			</control>
+			
+			<!-- Person Info Line Data ************************************************************************************ -->
+			<!-- Person's Death Day -->
+			<control type="image">
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(Deathday))</visible>
+				<top>3</top>
+				<width>40</width>
+				<aspectratio>keep</aspectratio>
+				<texture>$VAR[IconPathVar]gravestone.png</texture>
+			</control>
+			<control type="label" id="6301">
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(Deathday))</visible>
+				<width>auto</width>
+				<font>Font23_Reg</font>
+				<textcolor>$VAR[PanelTextColorVar]</textcolor>
+				<label>$INFO[ListItem.Property(Deathday),, ]</label>
+			</control>	
+
+			<!-- Person's Age -->
+			<control type="image">
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(Age))</visible>
+				<top>3</top>
+				<width>40</width>
+				<aspectratio>keep</aspectratio>
+				<texture>$VAR[IconPathVar]birthday-cake.png</texture>
+			</control>
+			<control type="label" id="6301">
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(Age))</visible>
+				<width>auto</width>
+				<font>Font23_Reg</font>
+				<textcolor>$VAR[PanelTextColorVar]</textcolor>
+				<label>$INFO[ListItem.Property(Age),, $LOCALIZE[31392]]</label>
+			</control>
+
+			<!-- Person's Date of Birth -->
+			<control type="image">
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(Birthday))</visible>
+				<top>3</top>
+				<width>40</width>
+				<aspectratio>keep</aspectratio>
+				<texture>$VAR[IconPathVar]calendar.png</texture>
+			</control>
+			<control type="label" id="6301">
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(Birthday))</visible>
+				<width>auto</width>
+				<font>Font23_Reg</font>
+				<textcolor>$VAR[PanelTextColorVar]</textcolor>
+				<label>$INFO[ListItem.Property(Birthday),, ]</label>
+			</control>		
+
+			<!-- Person's Birth City/State -->
+			<control type="image">
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(Born))</visible>
+				<top>3</top>
+				<width>40</width>
+				<aspectratio>keep</aspectratio>
+				<texture>$VAR[IconPathVar]pacifier.png</texture>
+			</control>
+			<control type="label" id="6301">
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(Born))</visible>
+				<width>auto</width>
+				<font>Font23_Reg</font>
+				<textcolor>$VAR[PanelTextColorVar]</textcolor>
+				<label>$INFO[ListItem.Property(Born),, ]</label>
+			</control>						
+
+			<!-- Facebook -->
+			<!-- <control type="image"> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(facebook_id))</visible> -->
+				<!-- <top>3</top> -->
+				<!-- <width>30</width> -->
+				<!-- <aspectratio>keep</aspectratio> -->
+				<!-- <texture>$VAR[IconPathVar]facebook.png</texture> -->
+			<!-- </control> -->
+			<!-- <control type="label" id="6301"> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(facebook_id))</visible> -->
+				<!-- <width>auto</width> -->
+				<!-- <font>Font23_Reg</font> -->
+				<!-- <textcolor>$VAR[PanelTextColorVar]</textcolor> -->
+				<!-- <label>$INFO[ListItem.Property(facebook_id),, ]</label> -->
+			<!-- </control> -->
+			
+			<!-- Instagram -->
+			<!-- <control type="image"> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(instagram_id))</visible> -->
+				<!-- <top>3</top> -->
+				<!-- <width>30</width> -->
+				<!-- <aspectratio>keep</aspectratio> -->
+				<!-- <texture>$VAR[IconPathVar]Instagram.png</texture> -->
+			<!-- </control> -->
+			<!-- <control type="label" id="6302"> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(instagram_id))</visible> -->
+				<!-- <width>auto</width> -->
+				<!-- <font>Font23_Reg</font> -->
+				<!-- <textcolor>$VAR[PanelTextColorVar]</textcolor> -->
+				<!-- <label>$INFO[ListItem.Property(instagram_id),, ]</label> -->
+			<!-- </control> -->
+			
+			<!-- Twitter/X -->
+			<!-- <control type="image"> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(twitter_id))</visible> -->
+				<!-- <top>3</top> -->
+				<!-- <width>30</width> -->
+				<!-- <aspectratio>keep</aspectratio> -->
+				<!-- <texture>$VAR[IconPathVar]x.png</texture> -->
+			<!-- </control> -->
+			<!-- <control type="label" id="6303"> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(twitter_id))</visible> -->
+				<!-- <width>auto</width> -->
+				<!-- <font>Font23_Reg</font> -->
+				<!-- <textcolor>$VAR[PanelTextColorVar]</textcolor> -->
+				<!-- <label>$INFO[ListItem.Property(twitter_id),, ]</label> -->
+			<!-- </control>			 -->
+			
+			<!-- Tiktok -->
+			<!-- <control type="image"> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(tiktok_id))</visible> -->
+				<!-- <top>3</top> -->
+				<!-- <width>30</width> -->
+				<!-- <aspectratio>keep</aspectratio> -->
+				<!-- <texture>$VAR[IconPathVar]tiktok.png</texture> -->
+			<!-- </control> -->
+			<!-- <control type="label" id="6304"> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(tiktok_id))</visible> -->
+				<!-- <width>auto</width> -->
+				<!-- <font>Font23_Reg</font> -->
+				<!-- <textcolor>$VAR[PanelTextColorVar]</textcolor> -->
+				<!-- <label>$INFO[ListItem.Property(tiktok_id),, ]</label> -->
+			<!-- </control> -->
+			
+			<!-- YouTube -->
+			<!-- <control type="image"> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(youtube_id))</visible> -->
+				<!-- <top>3</top> -->
+				<!-- <width>30</width> -->
+				<!-- <aspectratio>keep</aspectratio> -->
+				<!-- <texture>$VAR[IconPathVar]youtube.png</texture> -->
+			<!-- </control> -->
+			<!-- <control type="label" id="6305"> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(youtube_id))</visible> -->
+				<!-- <width>auto</width> -->
+				<!-- <font>Font23_Reg</font> -->
+				<!-- <textcolor>$VAR[PanelTextColorVar]</textcolor> -->
+				<!-- <label>$INFO[ListItem.Property(youtube_id),, ]</label> -->
+			<!-- </control>				 -->
+			
+			<!-- IMDB -->
+			<control type="image">
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(imdb_id))</visible>
+				<top>3</top>
+				<width>40</width>
+				<aspectratio>keep</aspectratio>
+				<texture>$VAR[IconPathVar]imdb_square.png</texture>
+			</control>
+			<control type="label" id="6306">
+				<!-- <visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person)</visible> -->
+				<visible>Container(9000).HasFocus(112) | String.IsEqual(ListItem.Property(item.type),person) + !String.IsEmpty(ListItem.Property(imdb_id))</visible>
+				<width>auto</width>
+				<font>Font23_Reg</font>
+				<textcolor>$VAR[PanelTextColorVar]</textcolor>
+				<label>[UPPERCASE]$INFO[ListItem.Property(imdb_id),, ][/UPPERCASE]</label>
+			</control>
+			
+			<!-- Person Social Icons End ************************************************************************************ -->
+			
 		</control>
 	</include>
 	<include name="MusicInfoLine">
@@ -1671,6 +1974,16 @@
 		</control>
 	</include>
 	<!-- Variables -->
+	<variable name="ViewInfoSocials">
+		<value condition="!IsEmpty(Window(Home).Property(Facebook_ID))">Facebook: $INFO[Window(Home).Property(Facebook_ID)]</value>
+		<value condition="!IsEmpty(Window(Home).Property(Instagram_ID))">Instagram: $INFO[Window(Home).Property(Instagram_ID)]</value>
+		<value condition="!IsEmpty(Window(Home).Property(Twitter_ID))">Twitter: $INFO[Window(Home).Property(Twitter_ID)]</value>
+		<value condition="!IsEmpty(Window(Home).Property(TikTok_ID))">TikTok: $INFO[Window(Home).Property(TikTok_ID)]</value>
+		<value condition="!IsEmpty(Window(Home).Property(YouTube_ID))">YouTube: $INFO[Window(Home).Property(YouTube_ID)]</value>
+	</variable>
+	
+	
+	
 	<variable name="ViewInfoDateVar">
 		<value condition="!String.IsEmpty(Container.ListItem.Premiered) + !String.IsEqual(Container.ListItem.DBTYPE,movie)">$INFO[Container.ListItem.Premiered, ,  ]</value>
 		<value condition="!String.IsEmpty(Container.ListItem.Date)">$INFO[Container.ListItem.Date, ,  ]</value>
@@ -1682,7 +1995,8 @@
 		<value condition="!String.IsEmpty(ListItem.Date)">$INFO[ListItem.Date, ,  ]</value>
 		<value condition="!String.IsEmpty(ListItem.Year)">$INFO[ListItem.Year, ,  ]</value>
 		<value condition="!String.IsEmpty(ListItem.Property(Artist_Formed))">$INFO[ListItem.Property(Artist_Formed), ,  ]</value>
-		<value condition="!String.IsEmpty(ListItem.Property(Artist_Born))">$INFO[ListItem.Property(Artist_Born), ,  ]</value>
+		<!-- <value condition="!String.IsEmpty(ListItem.Property(Artist_Born))">$INFO[ListItem.Property(Artist_Born), ,  ]</value> -->
+		<value condition="!String.IsEmpty(ListItem.Property(revenue))">$INFO[ListItem.Property(revenue), ,  ]</value>
 	</variable>
 	<variable name="ViewEmbuaryInfoDateVar">
 		<value condition="!String.IsEmpty(Container(10051).ListItem.Premiered)">$INFO[Container(10051).ListItem.Premiered, ,  ]</value>
@@ -1744,7 +2058,7 @@
 		<!-- <value condition="!String.IsEmpty(Container(10051).ListItem.Property(Rating.Rotten)) + Integer.IsGreater(Container(10051).ListItem.Property(Rating.Rotten),74) + Integer.IsGreater(Container(10051).ListItem.Property(Votes.Rotten),79)">flags/ratings/certified.png</value> -->
 		<!-- <value condition="!String.IsEmpty(Container(10051).ListItem.Property(Rating.Rotten)) + Integer.IsGreater(Container(10051).ListItem.Property(Rating.Rotten),59)">flags/ratings/fresh.png</value> -->
 		<!-- <value condition="!String.IsEmpty(Container(10051).ListItem.Property(Rating.Rotten)) + Integer.IsLess(Container(10051).ListItem.Property(Rating.Rotten),60)">flags/ratings/rotten.png</value> -->
-	
+		
 	</variable>
 	<variable name="ViewInfoRTAllCriticsLabelVar">
 		<value condition="String.StartsWith(Container(7005).ListItem.Rating(tomatometerallcritics),10)">10</value>
@@ -1904,8 +2218,10 @@
 	</variable>
 	<variable name="VideoInfoFanartVar"> <!-- CMB fixes fanart dropout -->
 		<value condition="Window.IsVisible(script-tmdbhelper-recommendations.xml) + !String.IsEmpty(Container(10051).ListItem.Art(fanart))">$INFO[Container(10051).ListItem.Art(fanart)]</value>
-		<value condition="Window.IsVisible(script-embuary-video.xml) + !String.IsEmpty(Container(10051).ListItem.Art(fanart))">$INFO[Container(10051).ListItem.Art(fanart)]</value>
-		<value condition="!Window.IsVisible(script-embuary-person.xml) + ControlGroup(9001).HasFocus + !Control.HasFocus(50)">$INFO[Container.ListItem.Art(fanart)]</value>
+		<value condition="Window.IsVisible(DialogVideoInfo.xml) + String.IsEqual(ListItem.Property(item.type),person)">$INFO[Container(10051).ListItem.Art(fanart)]</value>
+		<value condition="String.IsEqual(ListItem.Property(item.type),person)">$INFO[Container.ListItem.Art(fanart)]</value>
+		<!-- <value condition="Window.IsVisible(script-embuary-video.xml) + !String.IsEmpty(Container(10051).ListItem.Art(fanart))">$INFO[Container(10051).ListItem.Art(fanart)]</value> -->
+		<!-- <value condition="!Window.IsVisible(script-embuary-person.xml) + ControlGroup(9001).HasFocus + !Control.HasFocus(50)">$INFO[Container.ListItem.Art(fanart)]</value> -->
 		<value>$INFO[ListItem.Art(fanart)]</value>
 	</variable>
 	<variable name="VideoInfoPosterVar">
@@ -1951,11 +2267,11 @@
 		<value condition="!Skin.HasSetting(VideoInfoDisableDiscArt) + !String.IsEmpty(ListItem.Art(discart))">$INFO[ListItem.Art(discart)]</value>
 	</variable>
 	<!-- <variable name="VideoInfoCastVar">
-		<value condition="String.IsEqual(ListItem.DBType,movie)">plugin://script.embuary.helper?info=getcast&amp;type=movie&amp;dbid=$INFO[ListItem.DBID]</value>
-		<value condition="String.IsEqual(ListItem.DBType,tvshow)">plugin://script.embuary.helper?info=getcast&amp;type=tvshow&amp;dbid=$INFO[ListItem.DBID]</value>
-		<value condition="String.IsEqual(ListItem.DBType,episode)">plugin://script.embuary.helper?info=getcast&amp;type=episode&amp;dbid=$INFO[ListItem.DBID]</value>
-		<value condition="String.IsEqual(ListItem.DBType,season)">plugin://script.embuary.helper?info=getcast&amp;type=tvshow&amp;dbid=$INFO[ListItem.DBID]&amp;idtype=season</value>
-	</variable> -->
+						<value condition="String.IsEqual(ListItem.DBType,movie)">plugin://script.embuary.helper?info=getcast&amp;type=movie&amp;dbid=$INFO[ListItem.DBID]</value>
+						<value condition="String.IsEqual(ListItem.DBType,tvshow)">plugin://script.embuary.helper?info=getcast&amp;type=tvshow&amp;dbid=$INFO[ListItem.DBID]</value>
+						<value condition="String.IsEqual(ListItem.DBType,episode)">plugin://script.embuary.helper?info=getcast&amp;type=episode&amp;dbid=$INFO[ListItem.DBID]</value>
+						<value condition="String.IsEqual(ListItem.DBType,season)">plugin://script.embuary.helper?info=getcast&amp;type=tvshow&amp;dbid=$INFO[ListItem.DBID]&amp;idtype=season</value>
+						</variable> -->
 	<variable name="VideoInfoTMDbVar"> <!-- Do Not Modify - Embuary Test Calls For Validation -->
 		<value condition="String.IsEqual(ListItem.DBType,movie)">RunScript(script.embuary.info,call=movie,dbid=$INFO[ListItem.DBID])</value>
 		<value condition="String.IsEqual(ListItem.DBType,tvshow)">RunScript(script.embuary.info,call=tv,dbid=$INFO[ListItem.DBID])</value>
@@ -1964,42 +2280,46 @@
 		<value condition="String.IsEqual(Container.ListItem.DBTYPE,episode)">$INFO[Container.ListItem.Season,,x]$INFO[Container.ListItem.Episode,,. ]$INFO[Container.ListItem.Title]</value>
 		<value condition="ControlGroup(9001).HasFocus + !Control.HasFocus(50)">$INFO[Container.ListItem.Title]</value>
 		<value condition="String.IsEqual(ListItem.DBTYPE,episode)">$INFO[ListItem.Season,,x]$INFO[ListItem.Episode,,. ]$INFO[ListItem.Title]</value>
+		<value condition="String.IsEqual(ListItem.DBTYPE,movie)">$INFO[ListItem.Title] ($INFO[ListItem.Year])</value> 
 		<value>$INFO[ListItem.Title]</value>
 	</variable>
+	
 	<variable name="VideoInfoSubtitleVar">
 		<value condition="!String.IsEmpty(Container.ListItem.Tagline)">$INFO[Container.ListItem.Tagline]</value>
 		<value condition="String.IsEqual(Container.ListItem.DBType,episode)">$INFO[Container.ListItem.TvShowTitle]</value>
 		<value condition="ControlGroup(9001).HasFocus + !Control.HasFocus(50)">$INFO[Container.ListItem.Genre]</value>
 		<value condition="!String.IsEmpty(ListItem.Tagline)">$INFO[ListItem.Tagline]</value>
 		<value condition="String.IsEqual(ListItem.DBType,episode)">$INFO[ListItem.TvShowTitle]</value>
+		<!-- <value condition="String.IsEqual(ListItem.Property(item.type),person)">$LOCALIZE[31197] $INFO[ListItem.Property(Movie.Cast.1.Title)]</value> -->
+		<value condition="String.IsEqual(ListItem.Property(item.type),person)">$INFO[ListItem.Property(Department),$LOCALIZE[31197] ]</value>		
 		<value>$INFO[ListItem.Genre]</value>
 	</variable>
-
+	
 	<variable name="EmbuaryInfoTitleVar">
 		<value condition="String.IsEqual(ListItem.Property(item.type),person)">$INFO[ListItem.Label]</value>	
 		<value>$INFO[Container(10051).ListItem.Title]</value>
 	</variable>
-
+	
 	<variable name="EmbuaryInfoSubtitleVar">
 		<value condition="String.IsEqual(ListItem.Property(item.type),person + !String.IsEmpty(ListItem.Property(Age)">Age: $INFO[ListItem.Property(Age)]</value>
 		<value condition="String.IsEqual(ListItem.Property(item.type),person + String.IsEmpty(ListItem.Property(Age)"></value>
-   <!-- <value condition="String.IsEqual(ListItem.Property(item.type),person)">$INFO[ListItem.Property(Biography)]</value> -->
+		<!-- <value condition="String.IsEqual(ListItem.Property(item.type),person)">$INFO[ListItem.Property(Biography)]</value> -->
 		<value condition="!String.IsEmpty(Container(10051).ListItem.Tagline)">$INFO[Container(10051).ListItem.Tagline]</value>
 		<value condition="String.IsEqual(Container(10051).ListItem.DBType,season)">$INFO[Container(10051).ListItem.Season,$LOCALIZE[20373] ]</value>	
 		<value>$INFO[Container(10051).ListItem.Genre]</value>
 	</variable>
-
+	
 	<variable name="TMDBBirthdayVar">
 		<value condition="String.IsEqual(ListItem.Property(item.type),person + !String.IsEmpty(ListItem.Property(Birthday)">Born: $INFO[ListItem.Property(Birthday)]</value>
 		<value condition="String.IsEqual(ListItem.Property(item.type),person + String.IsEmpty(ListItem.Property(Birthday)"></value>
 	</variable>
-
+	
 	<variable name="TMDBDeathdayVar">
 		<value condition="String.IsEqual(ListItem.Property(item.type),person + !String.IsEmpty(ListItem.Property(Deathday)">Death: $INFO[ListItem.Property(Deathday)]</value>
 		<value condition="String.IsEqual(ListItem.Property(item.type),person + String.IsEmpty(ListItem.Property(Deathday)"></value>		
 	</variable>
-
-	 <variable name="TMDBHelperInfoSubtitleVar"> <!--cmb -->
+	
+	<variable name="TMDBHelperInfoSubtitleVar"> <!--cmb -->
 		<value condition="!String.IsEmpty(Container(10051).ListItem.Tagline)">$INFO[Container(5000).ListItem.Tagline]</value>
 		<value condition="String.IsEqual(Container(10051).ListItem.DBType,season)">$INFO[Container(5000).ListItem.Season,$LOCALIZE[20373] ]</value>
 		<value>$INFO[Container(5000).ListItem.Genre]</value>
@@ -2010,6 +2330,7 @@
 		<value condition="ControlGroup(9001).HasFocus + !Control.HasFocus(50)">$LOCALIZE[31348]</value>
 		<value condition="Skin.HasSetting(VideoInfoPlotOutline) + !String.IsEmpty(ListItem.PlotOutline)">$INFO[ListItem.PlotOutline]</value>
 		<value condition="!String.IsEmpty(ListItem.Plot)">$INFO[ListItem.Plot]</value>
+		<value condition="!String.IsEmpty(Window.Property(plot))">$INFO[Window.Property(plot)]</value>
 		<value>$LOCALIZE[31348]</value>
 	</variable>
 	<variable name="VideoInfoContainerIcon">
@@ -2078,8 +2399,9 @@
 		<value condition="Container(9000).HasFocus(103) | Control.HasFocus(10054)">$LOCALIZE[1213]</value>
 	</variable>
 	<variable name="VideoInfoSimilarContent">
-   <!-- <value condition="String.IsEqual(ListItem.DBType,movie)">plugin://script.embuary.helper/?info=getsimilar&amp;dbid=$INFO[ListItem.DBID]&amp;type=movie</value> -->
-		<value condition="String.IsEqual(ListItem.DBType,movie)">plugin://plugin.video.themoviedb.helper/?info=similar&amp;type=movie&amp;tmdb_id=$INFO[ListItem.Property(tmdb_id)]</value>
+		<value condition="String.IsEqual(ListItem.DBType,movie)">plugin://script.embuary.helper/?info=getsimilar&amp;dbid=$INFO[ListItem.DBID]&amp;type=movie</value>
+		<!-- <value condition="String.IsEqual(ListItem.DBType,movie)">plugin://plugin.video.themoviedb.helper/?info=similar&amp;type=movie&amp;tmdb_id=$INFO[ListItem.Property(tmdb_id)]</value> -->
+		<!-- TODO -->
 		<!-- <value condition="String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)">plugin://script.embuary.helper/?info=getsimilar&amp;dbid=$INFO[ListItem.DBID]&amp;type=tvshow</value> -->
 		<value condition="String.IsEqual(ListItem.DBType,tvshow) | String.IsEqual(ListItem.DBType,season)">plugin://plugin.video.themoviedb.helper/?info=similar&amp;type=tv&amp;tmdb_id=$INFO[ListItem.Property(tmdb_id)]</value>	
 	</variable>
@@ -2180,11 +2502,11 @@
 		<value></value>
 	</variable>
 	<!-- <variable name="MusicInfoFolderPathVar">
-		<value condition="Container.Content(albums) + String.IsEmpty(ListItem.DiscNumber)">musicdb://albums/$INFO[ListItem.DBID]/-1/?albumid=$INFO[ListItem.DBID]</value>
-		<value condition="!ListItem.IsParentFolder + Container.Content(albums) + !String.IsEmpty(ListItem.DiscNumber)">$INFO[ListItem.FolderPath]</value>
-	</variable> -->
-
-
+						<value condition="Container.Content(albums) + String.IsEmpty(ListItem.DiscNumber)">musicdb://albums/$INFO[ListItem.DBID]/-1/?albumid=$INFO[ListItem.DBID]</value>
+						<value condition="!ListItem.IsParentFolder + Container.Content(albums) + !String.IsEmpty(ListItem.DiscNumber)">$INFO[ListItem.FolderPath]</value>
+						</variable> -->
+	
+	
 	<variable name="TMDbHelperTypeVar">
 		<value condition="String.IsEqual(ListItem.DBTYPE,movie)">tmdb_type=movie</value>
 		<value condition="String.IsEqual(ListItem.DBTYPE,tvshow)">tmdb_type=tv</value>
@@ -2193,43 +2515,43 @@
 		<value condition="String.StartsWith(ListItem.IMDbNumber,tt)">imdb_id=$INFO[ListItem.IMDbNumber]</value>
 		<value>tmdb_id=$INFO[ListItem.IMDbNumber]</value>
 	</variable>
-
-
+	
+	
 	<variable name="recContainerList">
-
+		
 		<!-- *script-embuary-video.xml*
-		* List control ID `10051` = All available information of the called item.
-		* List control ID `10052` = Cast
-		* List control ID `10053` = Similar titles
-		* List control ID `10054` = YouTube results
-		* List control ID `10055` = Backdrop images
-		* List control ID `10056` = Crew (for seasons it is used to display guest stars)
-		* List control ID `10057` = Collection items
-		* List control ID `10058` = Seasons
-		* List control ID `10059` = Poster images -->
-
+							* List control ID `10051` = All available information of the called item.
+							* List control ID `10052` = Cast
+							* List control ID `10053` = Similar titles
+							* List control ID `10054` = YouTube results
+							* List control ID `10055` = Backdrop images
+							* List control ID `10056` = Crew (for seasons it is used to display guest stars)
+							* List control ID `10057` = Collection items
+							* List control ID `10058` = Seasons
+							* List control ID `10059` = Poster images -->
+		
 		<!-- <value condition="$EXP[isMovie]">10051|info=details|true|info|cacheonly=false|10052|info=cast|true|info|cacheonly=false|10053|info=similar|true|play|cacheonly=false|10054|info=videos|true|play|cacheonly=false|10055|info=$INFO[ListItem.Art(Fanart)]|true|info|cacheonly=false|10056|info=crew|true|info|cacheonly=false|10057|info=collection|true|info|cacheonly=false|10058|info=seasons|true|info|cacheonly=false|10059|info=$INFO[ListItem.Art(Poster)]|true|info|cacheonly=false</value> -->
 		
 		<!-- <value condition="$EXP[isMovie]">10051|info=details|true|info|cacheonly=true|10052|info=cast|true|info|cacheonly=true|10053|info=similar|true|play|cacheonly=true|10054|info=videos|true|play|cacheonly=true|10056|info=crew|true|info|cacheonly=true|10057|info=collection|true|play|cacheonly=true</value> -->
-
+		
 		<value condition="$EXP[isMovie]">10051|info=details|true|info||10052|info=cast|true|info||10053|info=similar|true|play||10054|info=videos|true|play||10056|info=crew|true|info||10057|info=collection|true|play</value>
-
+		
 		<!-- <value condition="$EXP[isMovie]">10051|info=details|true|info||10052|info=cast|true|info||10053|info=similar|true|play||10054|info=videos|true|play||10055|info=$INFO[ListItem.Art(Fanart)]|true|info||10056|info=crew|true|info||10057|info=collection|true|info||10058|info=seasons|true|info||10059|info=$INFO[ListItem.Art(Poster)]|true|info</value> -->
 		
-
+		
 		<!-- <value condition="$EXP[isMovie]">10051|info=details|true|noop||10052|info=cast|true|info||10053|info=crew|true|info||10054|info=collection|true|info||10056|info=crew|true|info||10057|info=similar|true|info</value> -->
-
+		
 		<value condition="$EXP[isTVShow]">10051|info=details|true|info||5000|info=details|true|info</value>
-
+		
 		<value condition="$EXP[isEpisode]">5000|info=details|true|noop||5001|info=cast&amp;season=$INFO[ListItem.Season]&amp;episode=$INFO[ListItem.Episode]|true|info||5002|info=crew|true|info</value>
 		
 	</variable>
-
+	
 	<!-- <onclick>Runscript(plugin.video.themoviedb.helper,recommendations=$VAR[recContainerList],window_id=1191,tmdb_type=$VAR[recMediaType],$VAR[recQuery],$VAR[recYear])</onclick> -->
-
+	
 	<!-- info=ListItem.Property($INFO[ListItem.Title]) -->
-
-
+	
+	
 	<!-- 5000/10051 Details | 5001 Crew | 5002 Set | 5003 Similar | 5004 Videos | 5005 Info -->
 	
 	<variable name="recMediaType">
@@ -2249,20 +2571,20 @@
 		<value condition="$EXP[isEpisode]">episode_year=$INFO[ListItem.Year]</value>
 		<value>year=$INFO[ListItem.Year]</value>
 	</variable>
-
+	
 	<expression name="isMovie">String.IsEqual(ListItem.DBTYPE,movie)</expression>
 	<expression name="isTVShow">String.IsEqual(ListItem.DBTYPE,tvshow)</expression>
 	<expression name="isEpisode">String.IsEqual(ListItem.DBTYPE,episode)</expression>
 	<expression name="isSet">String.IsEqual(ListItem.DBTYPE,collection)</expression>
-
-
+	
+	
 	<variable name="VideoInfoPlotVar">
 		<value condition="String.IsEqual(ListItem.Property(item.type),person)">$INFO[ListItem.Property(Biography)]</value>
 		<value condition="!String.IsEmpty(ListItem.Plot)">$INFO[ListItem.Plot]</value>		
 		<value condition="Window.IsVisible(script-tmdbhelper-recommendations.xml) + !String.IsEmpty(ListItem.Plot)">$INFO[ListItem.Plot]">$INFO[(Container(10054)ListItem.Plot]</value>
 		<value>>$INFO[Container(10054)ListItem.Plot]</value>
 	</variable>
-
+	
 	<variable name="VideoInfoPersonPosters">
 		<value condition="String.IsEqual(ListItem.Property(item.type),person + [Container(9000).HasFocus(102)]">$INFO[Container(10056).ListItem.Art(icon)]</value>
 		<value condition="String.IsEqual(ListItem.Property(item.type),person + [Container(9000).HasFocus(101)]">$INFO[Container(10052).ListItem.Art(icon)]</value>

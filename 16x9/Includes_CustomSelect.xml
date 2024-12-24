@@ -976,6 +976,143 @@
 			<selected>Skin.HasSetting(SourceFlags)</selected>
 		</control>
 	</include>
+	<!-- Media flags resolution color  --> <!-- CMB -->
+	<include name="MediaFlagResolutionColorSettings">
+		<item>
+			<label>$LOCALIZE[231]</label>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.Reset(MediaFlagResolutionColorSettingsValue,none)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[31191]</label>
+			<icon>flags/colored/videoresolution/1-Red/preview/1080.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagResolutionColorSettingsValue,red)</onclick>
+		</item>		
+		<item>
+			<label>$LOCALIZE[31189]</label>
+			<icon>flags/colored/videoresolution/2-Orange/preview/1080.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagResolutionColorSettingsValue,orange)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[31187]</label>
+			<icon>flags/colored/videoresolution/3-Green/preview/1080.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagResolutionColorSettingsValue,green)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[31185]</label>
+			<icon>flags/colored/videoresolution/4-Blue/preview/1080.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagResolutionColorSettingsValue,blue)</onclick>
+		</item>		
+		<item>
+			<label>$LOCALIZE[765]</label>
+			<icon>flags/colored/videoresolution/5-Cyan/preview/1080.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagResolutionColorSettingsValue,cyan)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[31396]</label>
+			<icon>flags/colored/videoresolution/6-Violet/preview/1080.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagResolutionColorSettingsValue,violet)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[31397]</label>
+			<icon>flags/colored/videoresolution/7-Magenta/preview/1080.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagResolutionColorSettingsValue,magenta)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[743]</label>
+			<icon>flags/colored/videoresolution/8-Yellow/preview/1080.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagResolutionColorSettingsValue,yellow)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[31398]</label>
+			<icon>flags/colored/videoresolution/9-Turquoise/preview/1080.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagResolutionColorSettingsValue,turquoise)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[31399]</label>
+			<icon>flags/colored/videoresolution/10-Brown/preview/1080.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagResolutionColorSettingsValue,brown)</onclick>
+		</item>
+	</include>
+		<!-- Media flags aspect ratio color --> <!-- CMB -->
+	<include name="MediaFlagAspectRatioColorSettings">
+		<item>
+			<label>$LOCALIZE[231]</label>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.Reset(MediaFlagAspectRatioColorSettingsValue,none)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[31191]</label>
+			<icon>flags/colored/videoaspect/1-Red/preview/1.00.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagAspectRatioColorSettingsValue,red)</onclick>
+		</item>		
+		<item>
+			<label>$LOCALIZE[31189]</label>
+			<icon>flags/colored/videoaspect/2-Orange/preview/1.00.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagAspectRatioColorSettingsValue,orange)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[31187]</label>
+			<icon>flags/colored/videoaspect/3-Green/preview/1.00.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagAspectRatioColorSettingsValue,green)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[31185]</label>
+			<icon>flags/colored/videoaspect/4-Blue/preview/1.00.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagAspectRatioColorSettingsValue,blue)</onclick>
+		</item>		
+		<item>
+			<label>$LOCALIZE[765]</label>
+			<icon>flags/colored/videoaspect/5-Cyan/preview/1.00.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagAspectRatioColorSettingsValue,cyan)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[31396]</label>
+			<icon>flags/colored/videoaspect/6-Violet/preview/1.00.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagAspectRatioColorSettingsValue,violet)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[31397]</label>
+			<icon>flags/colored/videoaspect/7-Magenta/preview/1.00.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagAspectRatioColorSettingsValue,magenta)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[743]</label>
+			<icon>flags/colored/videoaspect/8-Yellow/preview/1.00.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagAspectRatioColorSettingsValue,yellow)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[31398]</label>
+			<icon>flags/colored/videoaspect/9-Turquoise/preview/1.00.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagAspectRatioColorSettingsValue,turquoise)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[31399]</label>
+			<icon>flags/colored/videoaspect/10-Brown/preview/1.00.png</icon>
+			<onclick>Dialog.Close(1110)</onclick>
+			<onclick>Skin.SetString(MediaFlagAspectRatioColorSettingsValue,brown)</onclick>
+		</item>
+	</include>
+
 	<!-- Top bar -->
 	<include name="TopbarSettings">
 		<control type="radiobutton" id="102">
@@ -2214,6 +2351,52 @@
 			<onclick>Skin.SetString(BackgroundEffect.texture,easter)</onclick>
 		</item>
 	</include>
+		<include name="SelectColoredResolutionMediaFlag">
+		<item>
+			<label>$LOCALIZE[231]</label>
+			<onclick>Skin.Reset(BackgroundEffect.texture)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[31191]</label>
+			<onclick>Skin.SetString(BackgroundEffect.texture,red)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[31189]</label>
+			<onclick>Skin.SetString(ResolutionFlagUser.color,orange)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[31187]</label>
+			<onclick>Skin.SetString(ResolutionFlagUser.color,green)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[31185]</label>
+			<onclick>Skin.SetString(ResolutionFlagUser.color,blue)</onclick>
+		</item>
+		<item>
+			<label>$LOCALIZE[765]</label>
+			<onclick>Skin.SetString(ResolutionFlagUser.color,cyan)</onclick>
+		</item>
+				<item>
+			<label>$LOCALIZE[31396]</label>
+			<onclick>Skin.SetString(ResolutionFlagUser.color,violet)</onclick>
+		</item>
+				<item>
+			<label>$LOCALIZE[31397]</label>
+			<onclick>Skin.SetString(ResolutionFlagUser.color,magenta)</onclick>
+		</item>
+				<item>
+			<label>$LOCALIZE[743]</label>
+			<onclick>Skin.SetString(ResolutionFlagUser.color,yellow)</onclick>
+		</item>
+				<item>
+			<label>$LOCALIZE[31398]</label>
+			<onclick>Skin.SetString(ResolutionFlagUser.color,turquoise)</onclick>
+		</item>
+				<item>
+			<label>$LOCALIZE[31399]</label>
+			<onclick>Skin.SetString(ResolutionFlagUser.color,brown)</onclick>
+		</item>
+	</include>
 	<include name="SelectThemePanelTexture">
 		<item>
 			<label>$LOCALIZE[231]</label>
@@ -2458,4 +2641,43 @@
 			<onclick>Skin.SetString(MusicOSD.dim,E6FFFFFF)</onclick>
 		</item>
 	</include>
+
+
+
+		<!-- Variable for forced padding -->
+		<variable name="MediaColorFlagUserLabelForcedPadding">
+			<value>$LOCALIZE[31400]</value> <!-- Forced Padding for Right Align for resolution icons in admin panel, DO NOT change -->
+		</variable>
+
+		<!-- Variable for the image path -->
+		<variable name="ResolutionStyleColorVar">
+			<value condition="String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),red)">flags/colored/videoresolution/1-Red/preview/preview_red.png</value>
+			<value condition="String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),orange)">flags/colored/videoresolution/2-Orange/preview/preview_orange.png</value>
+			<value condition="String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),green)">flags/colored/videoresolution/3-Green/preview/preview_green.png</value>
+			<value condition="String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),blue)">flags/colored/videoresolution/4-Blue/preview/preview_blue.png</value>
+			<value condition="String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),cyan)">flags/colored/videoresolution/5-Cyan/preview/preview_cyan.png</value>
+			<value condition="String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),violet)">flags/colored/videoresolution/6-Violet/preview/preview_violet.png</value>
+			<value condition="String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),magenta)">flags/colored/videoresolution/7-Magenta/preview/preview_magenta.png</value>
+			<value condition="String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),yellow)">flags/colored/videoresolution/8-Yellow/preview/preview_yellow.png</value>
+			<value condition="String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),turquoise)">flags/colored/videoresolution/9-Turquoise/preview/preview_turquoise.png</value>
+			<value condition="String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),brown)">flags/colored/videoresolution/10-Brown/preview/preview_brown.png</value>
+			<value condition="String.IsEmpty(Skin.String(MediaFlagResolutionColorSettingsValue))">flags/colored/videoresolution/2-Orange/preview/preview_orange.png</value> <!-- Default image -->
+			<value>(No Match)</value>
+		</variable>
+
+		<!-- Variable for the image path -->
+		<variable name="AspectRatioStyleColorVar">
+			<value condition="String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),red)">flags/colored/videoaspect/1-Red/preview/preview_red.png</value>
+			<value condition="String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),orange)">flags/colored/videoaspect/2-Orange/preview/preview_orange.png</value>
+			<value condition="String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),green)">flags/colored/videoaspect/3-Green/preview/preview_green.png</value>
+			<value condition="String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),blue)">flags/colored/videoaspect/4-Blue/preview/preview_blue.png</value>
+			<value condition="String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),cyan)">flags/colored/videoaspect/5-Cyan/preview/preview_cyan.png</value>
+			<value condition="String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),violet)">flags/colored/videoaspect/6-Violet/preview/preview_violet.png</value>
+			<value condition="String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),magenta)">flags/colored/videoaspect/7-Magenta/preview/preview_magenta.png</value>
+			<value condition="String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),yellow)">flags/colored/videoaspect/8-Yellow/preview/preview_yellow.png</value>
+			<value condition="String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),turquoise)">flags/colored/videoaspect/9-Turquoise/preview/preview_turquoise.png</value>
+			<value condition="String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),brown)">flags/colored/videoaspect/10-Brown/preview/preview_brown.png</value>
+			<value condition="String.IsEmpty(Skin.String(MediaFlagAspectRatioColorSettingsValue))">flags/colored/videoaspect/2-Orange/preview/preview_orange.png</value> <!-- Default image -->
+			<value>(No Match)</value>
+		</variable>
 </includes>

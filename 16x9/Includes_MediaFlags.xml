@@ -167,7 +167,8 @@
 				<usecontrolcoords>true</usecontrolcoords>
 				<control type="image">
 					<visible>!String.IsEmpty(ListItem.VideoAspect)</visible>
-					<texture>$VAR[MediaFlagsPathVar]$INFO[ListItem.VideoAspect,videoaspect/,.png]</texture>
+					<!-- <texture>$VAR[MediaFlagsPathVar]$INFO[ListItem.VideoAspect,videoaspect/,.png]</texture> -->
+					<texture>$VAR[MediaFlagsPathVar]videoaspect/$VAR[MediaFlagsPathExpandedAspectRatioVar]$INFO[ListItem.VideoAspect,,.png]</texture>
 					<include>MediaFlagImage</include>
 				</control>
 				<control type="image">
@@ -224,7 +225,8 @@
 				<usecontrolcoords>true</usecontrolcoords>
 				<control type="image">
 					<visible>!String.IsEmpty(ListItem.VideoAspect)</visible>
-					<texture>$VAR[MediaFlagsPathVar]$INFO[ListItem.VideoAspect,videoaspect/,.png]</texture>
+					<!-- <texture>$VAR[MediaFlagsPathVar]$INFO[ListItem.VideoAspect,videoaspect/,.png]</texture> -->
+					<texture>$VAR[MediaFlagsPathVar]videoaspect/$VAR[MediaFlagsPathExpandedAspectRatioVar]$INFO[ListItem.VideoAspect,,.png]</texture>
 					<include>MediaFlagImage</include>
 				</control>
 				<control type="image">
@@ -292,7 +294,8 @@
 				</control>
 				<control type="image">
 					<visible>!String.IsEmpty(ListItem.VideoAspect)</visible>
-					<texture>$VAR[MediaFlagsPathVar]$INFO[ListItem.VideoAspect,videoaspect/,.png]</texture>
+					<!-- <texture>$VAR[MediaFlagsPathVar]$INFO[ListItem.VideoAspect,videoaspect/,.png]</texture> -->
+					<texture>$VAR[MediaFlagsPathVar]videoaspect/$VAR[MediaFlagsPathExpandedAspectRatioVar]$INFO[ListItem.VideoAspect,,.png]</texture>
 					<include>MediaFlagImage</include>
 				</control>
 				<control type="image">
@@ -366,7 +369,8 @@
 				</control>
 				<control type="image">
 					<visible>!String.IsEmpty(ListItem.VideoAspect)</visible>
-					<texture>$VAR[MediaFlagsPathVar]$INFO[ListItem.VideoAspect,videoaspect/,.png]</texture>
+					<!-- <texture>$VAR[MediaFlagsPathVar]$INFO[ListItem.VideoAspect,videoaspect/,.png]</texture> -->
+					<texture>$VAR[MediaFlagsPathVar]videoaspect/$VAR[MediaFlagsPathExpandedAspectRatioVar]$INFO[ListItem.VideoAspect,,.png]</texture>
 					<include>MediaFlagImage</include>
 				</control>
 				<control type="image">
@@ -1080,12 +1084,12 @@
 			</control>
 			<control type="image">
 				<visible>String.Contains(Player.Filename,"uhd")</visible>
-				<texture>$VAR[MediaFlagsPathVar]videoresolution/uhd.png</texture>
+				<texture>$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]uhd.png</texture>
 				<include>MediaFlagImage</include>			
 			</control>		
 			<control type="image">
 				<visible>String.Contains(Player.Filename,"hdr")</visible>
-				<texture>$VAR[MediaFlagsPathVar]videoresolution/hdr.png</texture>
+				<texture>$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]hdr.png</texture>
 				<include>MediaFlagImage</include>	
 			</control>
 			<!-- CMB -->		
@@ -1179,7 +1183,8 @@
 			</control>
 			<control type="image">
 				<visible>!ControlGroup(9001).HasFocus | Control.HasFocus(50)</visible>
-				<texture>$VAR[MediaFlagsPathVar]$INFO[ListItem.VideoAspect,videoaspect/,.png]</texture>
+				<!-- <texture>$VAR[MediaFlagsPathVar]$INFO[ListItem.VideoAspect,videoaspect/,.png]</texture> -->
+				<texture>$VAR[MediaFlagsPathVar]videoaspect/$VAR[MediaFlagsPathExpandedAspectRatioVar]$INFO[ListItem.VideoAspect,,.png]</texture>
 				<include>MediaFlagImage</include>
 			</control>
 			<control type="image">
@@ -1197,8 +1202,11 @@
 				<texture>$VAR[Container7005VideoCodecFlagVar]</texture>
 				<include>MediaFlagImage</include>
 			</control>
-			<include content="ResolutionFlags">
-				<param name="resolutionvisible">!ControlGroup(9001).HasFocus | Control.HasFocus(50)</param>
+			<include content="ResolutionFlags"> <!-- CMB resolution -->
+				<!-- <param name="resolutionvisible">!ControlGroup(9001).HasFocus | Control.HasFocus(50)</param> -->
+				<!-- <param name="resolutionvisible">(Container(9000).HasFocus(112) + String.IsEqual(ListItem.Property(item.type), person)) + (!ControlGroup(9001).HasFocus + Control.HasFocus(50))</param> -->
+				<!-- <param name="resolutionvisible">Container(9000).HasFocus(112) + String.IsEqual(ListItem.Property(item.type), person) + !ControlGroup(9001).HasFocus + Control.HasFocus(50)</param> -->
+				<param name="resolutionvisible">[!Container(9000).HasFocus | Control.HasFocus(50)] + [Container(9000).HasFocus(112) | !String.IsEqual(ListItem.Property(item.type),person)]</param>
 			</include>
 			<include content="ResolutionFlags">
 				<param name="container">Container.ListItem</param>
@@ -1419,7 +1427,8 @@
 			<!-- Music Videos -->
 			<control type="image">
 				<visible>String.IsEqual(ListItem.DBTYPE,musicvideo) + [!ControlGroup(9001).HasFocus | Control.HasFocus(9002)]</visible>
-				<texture>$VAR[MediaFlagsPathVar]$INFO[ListItem.VideoAspect,videoaspect/,.png]</texture>
+				<!-- <texture>$VAR[MediaFlagsPathVar]$INFO[ListItem.VideoAspect,videoaspect/,.png]</texture> -->
+				<texture>$VAR[MediaFlagsPathVar]videoaspect/$VAR[MediaFlagsPathExpandedAspectRatioVar]$INFO[ListItem.VideoAspect,,.png]</texture>
 				<include>MediaFlagImage</include>
 			</control>
 			<control type="image">
@@ -1790,49 +1799,58 @@
 		<value>$VAR[MediaFlagsPathVar]$INFO[VideoPlayer.VideoCodec,videocodec/,.png]</value>
 	</variable>
 	<variable name="VideoResolutionFlagVar"> <!-- Media VIDEORESOLUTION Flags -->
-		<value condition="String.Contains(Player.Filename,288) ">$VAR[MediaFlagsPathVar]videoresolution/288.png</value>
-		<value condition="String.Contains(Player.Filename,360) ">$VAR[MediaFlagsPathVar]videoresolution/360.png</value>
-		<value condition="String.Contains(Player.Filename,480) ">$VAR[MediaFlagsPathVar]videoresolution/480.png</value>
-		<value condition="String.Contains(Player.Filename,540) ">$VAR[MediaFlagsPathVar]videoresolution/540.png</value>
-		<value condition="String.Contains(Player.Filename,576) ">$VAR[MediaFlagsPathVar]videoresolution/576.png</value>
-		<value condition="String.Contains(Player.Filename,720) ">$VAR[MediaFlagsPathVar]videoresolution/720.png</value>
-		<value condition="String.Contains(Player.Filename,1080)">$VAR[MediaFlagsPathVar]videoresolution/1080.png</value>
-		<value condition="String.Contains(Player.Filename,2160)">$VAR[MediaFlagsPathVar]videoresolution/4kuhd.png</value>
-		<value condition="String.Contains(Player.Filename,4K)  ">$VAR[MediaFlagsPathVar]videoresolution/4kuhd.png</value>		
-		<value condition="String.IsEqual(ListItem.VideoResolution,4K) + String.Contains(ListItem.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/4kremux.png</value>
-		<value condition="Integer.IsLess(ListItem.VideoResolution,720) + String.Contains(ListItem.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/sdremux.png</value>
-		<value condition="String.Contains(ListItem.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/hdremux.png</value>
-		<value>$VAR[MediaFlagsPathVar]$INFO[ListItem.VideoResolution,videoresolution/,.png]</value>
+		<value condition="String.Contains(Player.Filename,288) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]288.png</value>
+		<value condition="String.Contains(Player.Filename,360) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]360.png</value>
+		<value condition="String.Contains(Player.Filename,480) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]480.png</value>
+		<value condition="String.Contains(Player.Filename,540) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]540.png</value>
+		<value condition="String.Contains(Player.Filename,576) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]576.png</value>
+		<value condition="String.Contains(Player.Filename,720) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]720.png</value>
+		<value condition="String.Contains(Player.Filename,1080)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]1080.png</value>
+		<value condition="String.Contains(Player.Filename,2160)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]4kuhd.png</value>
+		<value condition="String.Contains(Player.Filename,4K)  ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]4kuhd.png</value>		
+		<value condition="String.IsEqual(ListItem.VideoResolution,4K) + String.Contains(ListItem.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]4kremux.png</value>
+		<value condition="Integer.IsLess(ListItem.VideoResolution,720) + String.Contains(ListItem.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]sdremux.png</value>
+		<value condition="String.Contains(ListItem.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]hdremux.png</value>
+		<value condition="!String.IsEmpty(ListItem.VideoResolution)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]$INFO[ListItem.VideoResolution,,.png]</value>
+		<!-- <value>$VAR[MediaFlagsPathVar]$INFO[ListItem.VideoResolution,videoresolution/,.png]</value> -->
+		<!-- <value>$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]$INFO[ListItem.VideoResolution].png</value> -->
+		<value>flags/default/videoresolution/Video-Res-Not-Found-X.png</value> 
 	</variable>
 	<variable name="Container7005VideoResolutionFlagVar"> <!-- Media VIDEORESOLUTION Flags -->
-		<value condition="String.Contains(Container(7005).Player.Filename,288) ">$VAR[MediaFlagsPathVar]videoresolution/288.png</value>
-		<value condition="String.Contains(Container(7005).Player.Filename,360) ">$VAR[MediaFlagsPathVar]videoresolution/360.png</value>
-		<value condition="String.Contains(Container(7005).Player.Filename,480) ">$VAR[MediaFlagsPathVar]videoresolution/480.png</value>
-		<value condition="String.Contains(Container(7005).Player.Filename,540) ">$VAR[MediaFlagsPathVar]videoresolution/540.png</value>
-		<value condition="String.Contains(Container(7005).Player.Filename,576) ">$VAR[MediaFlagsPathVar]videoresolution/576.png</value>
-		<value condition="String.Contains(Container(7005).Player.Filename,720) ">$VAR[MediaFlagsPathVar]videoresolution/720.png</value>
-		<value condition="String.Contains(Container(7005).Player.Filename,1080)">$VAR[MediaFlagsPathVar]videoresolution/1080.png</value>
-		<value condition="String.Contains(Container(7005).Player.Filename,2160)">$VAR[MediaFlagsPathVar]videoresolution/4kuhd.png</value>
-		<value condition="String.Contains(Container(7005).Player.Filename,4K)  ">$VAR[MediaFlagsPathVar]videoresolution/4kuhd.png</value>	
-		<value condition="String.IsEqual(Container(7005).ListItem.VideoResolution,4K) + String.Contains(Container(7005).ListItem.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/4kremux.png</value>
-		<value condition="Integer.IsLess(Container(7005).ListItem.VideoResolution,720) + String.Contains(Container(7005).ListItem.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/sdremux.png</value>
-		<value condition="String.Contains(Container(7005).ListItem.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/hdremux.png</value>
-		<value>$VAR[MediaFlagsPathVar]$INFO[Container(7005).ListItem.VideoResolution,videoresolution/,.png]</value>
+		<value condition="String.Contains(Container(7005).Player.Filename,288) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]288.png</value>
+		<value condition="String.Contains(Container(7005).Player.Filename,360) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]360.png</value>
+		<value condition="String.Contains(Container(7005).Player.Filename,480) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]480.png</value>
+		<value condition="String.Contains(Container(7005).Player.Filename,540) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]540.png</value>
+		<value condition="String.Contains(Container(7005).Player.Filename,576) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]576.png</value>
+		<value condition="String.Contains(Container(7005).Player.Filename,720) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]720.png</value>
+		<value condition="String.Contains(Container(7005).Player.Filename,1080)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]1080.png</value>
+		<value condition="String.Contains(Container(7005).Player.Filename,2160)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]4kuhd.png</value>
+		<value condition="String.Contains(Container(7005).Player.Filename,4K)  ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]4kuhd.png</value>	
+		<value condition="String.IsEqual(Container(7005).ListItem.VideoResolution,4K) + String.Contains(Container(7005).ListItem.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]4kremux.png</value>
+		<value condition="Integer.IsLess(Container(7005).ListItem.VideoResolution,720) + String.Contains(Container(7005).ListItem.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]sdremux.png</value>
+		<value condition="String.Contains(Container(7005).ListItem.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]hdremux.png</value>
+		<!-- <value>$VAR[MediaFlagsPathVar]$INFO[Container(7005).ListItem.VideoResolution,videoresolution/,.png]</value> -->
+		<!-- <value>$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]$INFO[Container(7005).ListItem.VideoResolution].png</value> -->
+		<value condition="!String.IsEmpty(Container(7005).ListItem.VideoResolution)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]$INFO[Container(7005).ListItem.VideoResolution,,.png]</value>
+		<value>flags/default/videoresolution/Video-Res-Not-Found-X.png</value>
 	</variable>
 	<variable name="PlayerVideoResolutionFlagVar"> <!-- Main Menu > Videos > Media VIDEORESOLUTION Flags -->
-		<value condition="String.Contains(Player.Filename,288) ">$VAR[MediaFlagsPathVar]videoresolution/288.png</value>
-		<value condition="String.Contains(Player.Filename,360) ">$VAR[MediaFlagsPathVar]videoresolution/360.png</value>
-		<value condition="String.Contains(Player.Filename,480) ">$VAR[MediaFlagsPathVar]videoresolution/480.png</value>
-		<value condition="String.Contains(Player.Filename,540) ">$VAR[MediaFlagsPathVar]videoresolution/540.png</value>
-		<value condition="String.Contains(Player.Filename,576) ">$VAR[MediaFlagsPathVar]videoresolution/576.png</value>
-		<value condition="String.Contains(Player.Filename,720) ">$VAR[MediaFlagsPathVar]videoresolution/720.png</value>
-		<value condition="String.Contains(Player.Filename,1080)">$VAR[MediaFlagsPathVar]videoresolution/1080.png</value>
-		<value condition="String.Contains(Player.Filename,2160)">$VAR[MediaFlagsPathVar]videoresolution/4kuhd.png</value>
-		<value condition="String.Contains(Player.Filename,4K)  ">$VAR[MediaFlagsPathVar]videoresolution/4kuhd.png</value>
-		<value condition="String.IsEqual(VideoPlayer.VideoResolution,4K) + String.Contains(Player.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/4kremux.png</value>
-		<value condition="Integer.IsLess(VideoPlayer.VideoResolution,720) + String.Contains(Player.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/sdremux.png</value>
-		<value condition="String.Contains(Player.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/hdremux.png</value>
-		<value>$VAR[MediaFlagsPathVar]$INFO[VideoPlayer.VideoResolution,videoresolution/,.png]</value>
+		<value condition="String.Contains(Player.Filename,288) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]288.png</value>
+		<value condition="String.Contains(Player.Filename,360) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]360.png</value>
+		<value condition="String.Contains(Player.Filename,480) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]480.png</value>
+		<value condition="String.Contains(Player.Filename,540) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]540.png</value>
+		<value condition="String.Contains(Player.Filename,576) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]576.png</value>
+		<value condition="String.Contains(Player.Filename,720) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]720.png</value>
+		<value condition="String.Contains(Player.Filename,1080)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]1080.png</value>
+		<value condition="String.Contains(Player.Filename,2160)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]4kuhd.png</value>
+		<value condition="String.Contains(Player.Filename,4K)  ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]4kuhd.png</value>
+		<value condition="String.IsEqual(VideoPlayer.VideoResolution,4K) + String.Contains(Player.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]4kremux.png</value>
+		<value condition="Integer.IsLess(VideoPlayer.VideoResolution,720) + String.Contains(Player.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]sdremux.png</value>
+		<value condition="String.Contains(Player.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]hdremux.png</value>
+		<!-- <value>$VAR[MediaFlagsPathVar]$INFO[VideoPlayer.VideoResolution,videoresolution/,.png]</value> -->
+		<!-- <value>$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]$INFO[VideoPlayer.VideoResolution].png</value> -->
+		<value condition="!String.IsEmpty(VideoPlayer.VideoResolution)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]$INFO[VideoPlayer.VideoResolution,,.png]</value>
+		<value>flags/default/videoresolution/Video-Res-Not-Found-X.png</value>
 	</variable>
 	<variable name="AudioCodecFlagVar">
 		<value condition="String.Contains(ListItem.Filename,atmos)">$VAR[MediaFlagsPathVar]audiocodec/atmos.png</value>
@@ -1882,10 +1900,48 @@
 		<value condition="Container.Content(artists)">$LOCALIZE[132]</value>
 		<value condition="Container.Content(albums)">$LOCALIZE[134]</value>
 	</variable>
+
+	<!-- This is the original variable, no change to what is shown below -->
+<!-- 	<variable name="MediaFlagsPathVar">
+		<value condition="Skin.HasSetting(MediaFlagsColored)">flags/colored/</value>
+		<value>flags/default/</value>
+	</variable> -->
+
+
 	<variable name="MediaFlagsPathVar">
 		<value condition="Skin.HasSetting(MediaFlagsColored)">flags/colored/</value>
 		<value>flags/default/</value>
 	</variable>
+
+	<variable name="MediaFlagsPathExpandedResolutionVar">
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),red)">1-Red/</value>
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),orange)">2-Orange/</value>
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),green)">3-Green/</value>
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),blue)">4-Blue/</value>
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),cyan)">5-Cyan/</value>
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),violet)">6-Violet/</value>
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),magenta)">7-Magenta/</value>
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),yellow)">8-Yellow/</value>
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),turquoise)">9-Turquoise/</value>
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),brown)">10-Brown/</value>
+	</variable>
+
+	<variable name="MediaFlagsPathExpandedAspectRatioVar">
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),red)">1-Red/</value>
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),orange)">2-Orange/</value>
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),green)">3-Green/</value>
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),blue)">4-Blue/</value>
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),cyan)">5-Cyan/</value>
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),violet)">6-Violet/</value>
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),magenta)">7-Magenta/</value>
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),yellow)">8-Yellow/</value>
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),turquoise)">9-Turquoise/</value>
+		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),brown)">10-Brown/</value>
+	</variable>
+
+	
+
+
 	<variable name="VideoPlayerStudioIconsVar">
 		<value condition="!String.IsEmpty(VideoPlayer.Studio) + !Skin.HasSetting(MediaFlagsColored)">$INFO[VideoPlayer.Studio,resource://resource.images.studios.white/,.png]</value>
 		<value condition="!String.IsEmpty(VideoPlayer.Studio) + Skin.HasSetting(MediaFlagsColored)">$INFO[VideoPlayer.Studio,resource://resource.images.studios.coloured/,.png]</value>

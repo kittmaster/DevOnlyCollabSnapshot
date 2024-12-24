@@ -1023,6 +1023,34 @@
 		<value condition="Skin.String(LibraryMusicDiscArtFallback,red)">$LOCALIZE[31191]</value>
 		<value>CD</value>
 	</variable>
+	<variable name="ResolutionMediaColorFlagUserLabelVar">
+	    <value condition="Skin.String(MediaFlagResolutionColorSettingsValue,none)">$LOCALIZE[231]</value>
+		<value condition="Skin.String(MediaFlagResolutionColorSettingsValue,red)">$LOCALIZE[31191]</value>	
+		<value condition="Skin.String(MediaFlagResolutionColorSettingsValue,orange)">$LOCALIZE[31189]</value>
+		<value condition="Skin.String(MediaFlagResolutionColorSettingsValue,green)">$LOCALIZE[31187]</value>
+		<value condition="Skin.String(MediaFlagResolutionColorSettingsValue,blue)">$LOCALIZE[31185]</value>
+		<value condition="Skin.String(MediaFlagResolutionColorSettingsValue,cyan)">$LOCALIZE[765]</value>
+        <value condition="Skin.String(MediaFlagResolutionColorSettingsValue,violet)">$LOCALIZE[31396]</value>		
+		<value condition="Skin.String(MediaFlagResolutionColorSettingsValue,magenta)">$LOCALIZE[31397]</value>
+		<value condition="Skin.String(MediaFlagResolutionColorSettingsValue,yellow)">$LOCALIZE[743]</value>
+		<value condition="Skin.String(MediaFlagResolutionColorSettingsValue,turquoise)">$LOCALIZE[31398]</value>
+		<value condition="Skin.String(MediaFlagResolutionColorSettingsValue,brown)">$LOCALIZE[31399]</value>
+		<value>Default / Orange</value>
+	</variable>
+		<variable name="AspectRatioMediaColorFlagUserLabelVar">
+	    <value condition="Skin.String(MediaFlagAspectRatioColorSettingsValue,none)">$LOCALIZE[231]</value>
+		<value condition="Skin.String(MediaFlagAspectRatioColorSettingsValue,red)">$LOCALIZE[31191]</value>	
+		<value condition="Skin.String(MediaFlagAspectRatioColorSettingsValue,orange)">$LOCALIZE[31189]</value>
+		<value condition="Skin.String(MediaFlagAspectRatioColorSettingsValue,green)">$LOCALIZE[31187]</value>
+		<value condition="Skin.String(MediaFlagAspectRatioColorSettingsValue,blue)">$LOCALIZE[31185]</value>
+		<value condition="Skin.String(MediaFlagAspectRatioColorSettingsValue,cyan)">$LOCALIZE[765]</value>
+        <value condition="Skin.String(MediaFlagAspectRatioColorSettingsValue,violet)">$LOCALIZE[31396]</value>		
+		<value condition="Skin.String(MediaFlagAspectRatioColorSettingsValue,magenta)">$LOCALIZE[31397]</value>
+		<value condition="Skin.String(MediaFlagAspectRatioColorSettingsValue,yellow)">$LOCALIZE[743]</value>
+		<value condition="Skin.String(MediaFlagAspectRatioColorSettingsValue,turquoise)">$LOCALIZE[31398]</value>
+		<value condition="Skin.String(MediaFlagAspectRatioColorSettingsValue,brown)">$LOCALIZE[31399]</value>
+		<value>Default / Orange</value>
+	</variable>
 	<!-- Folder paths -->
 	<variable name="VideoFolderPathVar">
 		<value condition="String.IsEqual(ListItem.DBTYPE,set)">videodb://movies/sets/$INFO[ListItem.DBID]/?setid=$INFO[ListItem.DBID]</value>

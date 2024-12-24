@@ -24,6 +24,15 @@
 			<itemgap>0</itemgap>
 			<visible>Skin.HasSetting(DebugInfo)</visible>
 			<!-- DEBUG LABELS -->
+
+			<control type="label">
+				<height>30</height>
+				<textcolor>FFFF0000</textcolor>
+				<shadowcolor>FF000000</shadowcolor>
+				<font>Font25_Cond_Bold</font>
+				<label>[COLOR FF00FF00]Item.type- [/COLOR]$INFO[ListItem.Property(item.type)]</label>
+				<visible>!String.IsEmpty(ListItem.Property(item.type))</visible>
+			</control>
 		
 
 			<!-- MY VARS -->

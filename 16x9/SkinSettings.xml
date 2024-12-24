@@ -874,6 +874,7 @@
 						<left>425</left>
 						<width>1395</width>
 						<height>670</height>
+						<usecontrolcoords>true</usecontrolcoords>
 						<onleft>7000</onleft>
 						<onright>607006</onright>
 						<pagecontrol>607006</pagecontrol>
@@ -884,7 +885,7 @@
 						</control>
 						<control type="radiobutton" id="602">
 							<!-- <label>$LOCALIZE[31062]</label> -->
-							<label>$LOCALIZE[737] icons</label>
+							<label>$LOCALIZE[31394]</label>
 							<onclick>Skin.ToggleSetting(IconsColored)</onclick>
 							<selected>Skin.HasSetting(IconsColored)</selected>
 							<include>SettingsRadioButton</include>
@@ -895,14 +896,62 @@
 							<onclick>ActivateWindow(1111)</onclick>
 							<include>SettingsButton</include>
 						</control>
-						<control type="button" id="605">
+						<!-- Resolution Icon Color Entry Selection -->
+						<control type="button" id="604">
+							<label>$LOCALIZE[31395]</label>
+							<label2>$VAR[ResolutionMediaColorFlagUserLabelVar]$VAR[MediaColorFlagUserLabelForcedPadding]</label2>
+							<onclick>SetProperty(CustomSelect,$LOCALIZE[31395],home)</onclick>
+							<onclick>ActivateWindow(1110)</onclick>
+							<include>SettingsButton</include>
+							<enable>Skin.HasSetting(iconscolored) + Skin.HasSetting(mediaflagscolored)</enable>
+						</control>
+						<control type="group" id="605">
+							<top>-67</top>
+							<height>67</height>
+							<right>-1288</right>
+								<control type="image">
+									<visible>Container(7000).Hasfocus(6)</visible>									
+									<aspectratio>keep</aspectratio>
+									<texture>$VAR[ResolutionStyleColorVar]</texture>
+								</control>
+								<control type="image">
+									<visible>!Container(7000).Hasfocus(6)</visible>									
+									<aspectratio>keep</aspectratio>
+									<texture>$VAR[ResolutionStyleColorVar]</texture>
+								</control>
+						</control>
+						<!-- Aspect Ratio Icon Color Entry Selection -->
+						<control type="button" id="606">
+							<label>$LOCALIZE[31401]</label>
+							<label2>$VAR[AspectRatioMediaColorFlagUserLabelVar]$VAR[MediaColorFlagUserLabelForcedPadding]</label2>
+							<onclick>SetProperty(CustomSelect,$LOCALIZE[31401],home)</onclick>
+							<onclick>ActivateWindow(1110)</onclick>
+							<include>SettingsButton</include>
+							<enable>Skin.HasSetting(iconscolored) + Skin.HasSetting(mediaflagscolored)</enable>
+						</control>
+						<control type="group" id="607">
+							<top>-67</top>
+							<height>67</height>
+							<right>-1288</right>
+								<control type="image">
+									<visible>Container(7000).Hasfocus(6)</visible>									
+									<aspectratio>keep</aspectratio>
+									<texture>$VAR[AspectRatioStyleColorVar]</texture>
+								</control>
+								<control type="image">
+									<visible>!Container(7000).Hasfocus(6)</visible>									
+									<aspectratio>keep</aspectratio>
+									<texture>$VAR[AspectRatioStyleColorVar]</texture>
+								</control>
+						</control>
+						<control type="button" id="618">
 							<label>$LOCALIZE[31009]</label>
 							<label2>$VAR[LibraryAudioDiscArtLabelVar]</label2>
 							<onclick>SetProperty(CustomSelect,$LOCALIZE[31009],home)</onclick>
 							<onclick>ActivateWindow(1110)</onclick>
 							<include>SettingsButton</include>
 						</control>
-						<control type="button" id="606">
+						<control type="button" id="619">
 							<label>$LOCALIZE[31299]</label>
 							<label2>$VAR[LibraryVideoDiscArtLabelVar]</label2>
 							<onclick>SetProperty(CustomSelect,$LOCALIZE[31299],home)</onclick>

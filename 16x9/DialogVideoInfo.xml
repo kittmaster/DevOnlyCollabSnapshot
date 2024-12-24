@@ -2,6 +2,7 @@
 <window>
 	<defaultcontrol>9000</defaultcontrol>
 	<onload>SetFocus(9000,0)</onload>
+	<!-- <onload>RunPlugin(plugin://plugin.video.themoviedb.helper?info=collection&amp;type=collection&amp;query=$INFO[ListItem.Title])SetProperty(MovieInfoPath, $INFO[ListItem.Title])</onload> -->
 	<onload condition="System.AddonIsEnabled(script.embuary.helper) + Skin.HasSetting(BlurEnabled) + !String.IsEqual(ListItem.DBType,musicvideo) + Skin.HasSetting(VideoBlurEnabled)">RunScript(script.embuary.helper,action=blurimg,file=$ESCINFO[ListItem.Art(thumb)],prop=blurthumb,radius=2)</onload>
 	<onload condition="System.AddonIsEnabled(script.embuary.helper) + Skin.HasSetting(BlurEnabled) + String.IsEqual(ListItem.DBType,musicvideo) + Skin.HasSetting(MusicBlurEnabled)">RunScript(script.embuary.helper,action=blurimg,file=$ESCINFO[ListItem.Art(thumb)],prop=blurthumb,radius=2)</onload>
 	<onload condition="System.AddonIsEnabled(script.embuary.helper) + String.IsEqual(ListItem.DBTYPE,movie)">RunScript(script.embuary.helper,action=split,value='$ESCINFO[ListItem.Writer]',separator='" / "',prop=Writer)</onload>
@@ -9,6 +10,9 @@
 	<onload condition="System.AddonIsEnabled(script.embuary.helper) + !String.IsEqual(ListItem.DBTYPE,musicvideo)">RunScript(script.embuary.helper,action=encode,string=$INFO[ListItem.Title],prop=TitleEncoded)</onload>
 	<onload condition="System.AddonIsEnabled(script.embuary.helper) + !String.IsEqual(ListItem.DBTYPE,musicvideo)">RunScript(script.embuary.helper,action=encode,string=$INFO[ListItem.TVShowTitle],prop=TVShowTitleEncoded)</onload>
 	<controls>
+		<control type="list" id="9143">
+			<include>HiddenList</include>
+		</control>
 		<include content="DialogInfoCommon">
 			<param name="blur">Skin.HasSetting(VideoBlurEnabled)</param>
 			<param name="art">$VAR[PosterVar]</param>

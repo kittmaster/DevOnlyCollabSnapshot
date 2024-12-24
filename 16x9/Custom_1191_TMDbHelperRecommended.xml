@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <window type="window" id="1191">
     <controls>
+	</controls>
+</window>
 
    <!-- *script-embuary-video.xml*
 		* List control ID `10051` = All available information of the called item.
@@ -12,33 +14,31 @@
 		* List control ID `10057` = Collection items
 		* List control ID `10058` = Seasons
 		* List control ID `10059` = Poster images -->
-
-   		<control type="list" id="10051">	
+ 
+<!-- 	<control type="list" id="10051">	<!** Movie / TV Show details **>
 			<include>HiddenList</include>
 		</control>
-		<control type="list" id="10052">	
+		<control type="list" id="10052">	<!** Cast **>
 			<include>HiddenList</include>
 		</control>
-		<control type="list" id="10053">	
+		<control type="list" id="10053">	<!** Similar titles **>
 			<include>HiddenList</include>
 		</control>
-		<control type="list" id="10054">	
+		<control type="list" id="10054">	<!** YouTube results **>	
 			<include>HiddenList</include>
 		</control>
-		<control type="list" id="10055">	
+		<control type="list" id="10055">	<!** Backdrop images **>
 			<include>HiddenList</include>
 		</control>
-		<control type="list" id="10056">	
+		<control type="list" id="10056">	<!** Crew (for seasons it is used to display guest stars) **>	
 			<include>HiddenList</include>
 		</control>
-		<control type="list" id="10057">	
+		<control type="list" id="10057">	<!** Collection items **>	
 			<include>HiddenList</include>
 		</control>
-		<control type="list" id="10058">	
+		<control type="list" id="10058">	<!** Seasons **>	
 			<include>HiddenList</include>
 		</control>
-		<control type="list" id="10059">	
+		<control type="list" id="10059">	<!** Poster images **>	
 			<include>HiddenList</include>
-		</control>
-    </controls>
-</window>
+		</control> -->
