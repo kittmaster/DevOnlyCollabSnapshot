@@ -18,7 +18,7 @@
 		<!-- Window/Dialog debug -->
 		<control type="grouplist">
 			<left>50</left>
-			<top>150</top>
+			<top>250</top>
 			<width>940</width>
 			<height>auto</height>
 			<itemgap>0</itemgap>
@@ -33,10 +33,11 @@
 				<label>[COLOR FF00FF00]Item.type- [/COLOR]$INFO[ListItem.Property(item.type)]</label>
 				<visible>!String.IsEmpty(ListItem.Property(item.type))</visible>
 			</control>
-		
 
-			<!-- MY VARS -->
-		
+
+			<!-- My Variable Watches -->
+     		<!-- My Variable Watches End-->
+
 			<control type="label">
 				<height>30</height>
 				<textcolor>FFFF0000</textcolor>
@@ -44,7 +45,7 @@
 				<font>Font25_Cond_Bold</font>
 				<label>$INFO[ListItem.DBType,[COLOR FF00FF00]ListItem.DBType - [/COLOR]]$INFO[ListItem.DBType, (ListItem.DBType=,)]</label>
 			</control>
-			
+
 			<control type="label">
 				<height>30</height>
 				<textcolor>FFFF0000</textcolor>
@@ -52,7 +53,7 @@
 				<font>Font25_Cond_Bold</font>
 				<label>$INFO[ListItem.DBID,[COLOR FF00FF00]ListItem.DBID - [/COLOR]]$INFO[ListItem.DBID, (ListItem.DBID=,)]</label>
 			</control>
-		
+
 			<!-- Control label -->
 			<control type="label">
 				<height>30</height>
@@ -141,7 +142,7 @@
 			<itemgap>20</itemgap>
 			<visible>Skin.HasSetting(DebugInfo)</visible>
 			<!-- DEBUG LABELS -->
-			
+
 			<control type="label">
 				<height>30</height>
 				<textcolor>FFE141C4</textcolor>
@@ -149,7 +150,7 @@
 				<font>Font25_Cond_Bold</font>
 				<label>$INFO[ListItem.Art(poster),[COLOR FF00FF00]ListItem.Art(poster) - [/COLOR]]</label>
 				<visible>!String.IsEmpty(ListItem.Art(poster))</visible>
-			</control>		
+			</control>
 			<control type="label">
 				<height>30</height>
 				<textcolor>FFE141C4</textcolor>

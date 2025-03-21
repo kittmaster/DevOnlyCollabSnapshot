@@ -788,6 +788,22 @@
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">12</property>
+			<label>$LOCALIZE[137]</label>
+			<label2 />
+			<icon>special://skin/extras/icons/search.png</icon>
+			<thumb />
+			<property name="labelID">137</property>
+			<onclick condition="true">Skin.SetString(SearchTerm)</onclick>
+			<property name="path">Skin.SetString(SearchTerm)</property>
+			<onclick condition="true">ActivateWindow(1112)</onclick>
+			<onclick>Action(Close)</onclick>
+			<onclick>ActivateWindow(1112)</onclick>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),shortcuts)</visible>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="2">
+			<property name="id">$NUMBER[2]</property>
+			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[342]</label>
 			<label2 />
 			<icon>special://skin/extras/icons/movies.png</icon>
@@ -800,8 +816,8 @@
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="2">
-			<property name="id">$NUMBER[2]</property>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
 			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[20343]</label>
 			<label2 />
@@ -815,8 +831,8 @@
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[2]</label>
 			<label2 />
@@ -830,8 +846,8 @@
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[20389]</label>
 			<label2 />
@@ -845,8 +861,8 @@
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[19020]</label>
 			<label2 />
@@ -860,8 +876,8 @@
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[15016]</label>
 			<label2 />
@@ -874,8 +890,8 @@
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),shortcuts)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[24001]</label>
 			<label2 />
@@ -885,22 +901,6 @@
 			<onclick>Action(Close)</onclick>
 			<property name="path">Action(Close)</property>
 			<onclick>ActivateWindow(addonbrowser,return)</onclick>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),shortcuts)</visible>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">12</property>
-			<label>$LOCALIZE[137]</label>
-			<label2 />
-			<icon>special://skin/extras/icons/search.png</icon>
-			<thumb />
-			<property name="labelID">137</property>
-			<onclick condition="true">Skin.SetString(SearchTerm)</onclick>
-			<property name="path">Skin.SetString(SearchTerm)</property>
-			<onclick condition="true">ActivateWindow(1112)</onclick>
-			<onclick>Action(Close)</onclick>
-			<onclick>ActivateWindow(1112)</onclick>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Container(9000).ListItem.Property(submenuVisibility),shortcuts)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
@@ -2209,6 +2209,22 @@
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">12</property>
+			<label>$LOCALIZE[137]</label>
+			<label2 />
+			<icon>special://skin/extras/icons/search.png</icon>
+			<thumb />
+			<property name="labelID">137</property>
+			<onclick condition="true">Skin.SetString(SearchTerm)</onclick>
+			<property name="path">Skin.SetString(SearchTerm)</property>
+			<onclick condition="true">ActivateWindow(1112)</onclick>
+			<onclick>Action(Close)</onclick>
+			<onclick>ActivateWindow(1112)</onclick>
+			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="2">
+			<property name="id">$NUMBER[2]</property>
+			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[342]</label>
 			<label2 />
 			<icon>special://skin/extras/icons/movies.png</icon>
@@ -2221,8 +2237,8 @@
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="2">
-			<property name="id">$NUMBER[2]</property>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
 			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[20343]</label>
 			<label2 />
@@ -2236,8 +2252,8 @@
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[2]</label>
 			<label2 />
@@ -2251,8 +2267,8 @@
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[20389]</label>
 			<label2 />
@@ -2266,8 +2282,8 @@
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[19020]</label>
 			<label2 />
@@ -2281,8 +2297,8 @@
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[15016]</label>
 			<label2 />
@@ -2295,8 +2311,8 @@
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[24001]</label>
 			<label2 />
@@ -2306,22 +2322,6 @@
 			<onclick>Action(Close)</onclick>
 			<property name="path">Action(Close)</property>
 			<onclick>ActivateWindow(addonbrowser,return)</onclick>
-			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">12</property>
-			<label>$LOCALIZE[137]</label>
-			<label2 />
-			<icon>special://skin/extras/icons/search.png</icon>
-			<thumb />
-			<property name="labelID">137</property>
-			<onclick condition="true">Skin.SetString(SearchTerm)</onclick>
-			<property name="path">Skin.SetString(SearchTerm)</property>
-			<onclick condition="true">ActivateWindow(1112)</onclick>
-			<onclick>Action(Close)</onclick>
-			<onclick>ActivateWindow(1112)</onclick>
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
@@ -2344,6 +2344,22 @@
 		<item id="1">
 			<property name="id">$NUMBER[1]</property>
 			<property name="mainmenuid">12</property>
+			<label>$LOCALIZE[137]</label>
+			<label2 />
+			<icon>special://skin/extras/icons/search.png</icon>
+			<thumb />
+			<property name="labelID">137</property>
+			<onclick condition="true">Skin.SetString(SearchTerm)</onclick>
+			<property name="path">Skin.SetString(SearchTerm)</property>
+			<onclick condition="true">ActivateWindow(1112)</onclick>
+			<onclick>Action(Close)</onclick>
+			<onclick>ActivateWindow(1112)</onclick>
+			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),shortcuts)</visible>
+			<property name="isSubmenu">True</property>
+			</item>
+		<item id="2">
+			<property name="id">$NUMBER[2]</property>
+			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[342]</label>
 			<label2 />
 			<icon>special://skin/extras/icons/movies.png</icon>
@@ -2356,8 +2372,8 @@
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="2">
-			<property name="id">$NUMBER[2]</property>
+		<item id="3">
+			<property name="id">$NUMBER[3]</property>
 			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[20343]</label>
 			<label2 />
@@ -2371,8 +2387,8 @@
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="3">
-			<property name="id">$NUMBER[3]</property>
+		<item id="4">
+			<property name="id">$NUMBER[4]</property>
 			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[2]</label>
 			<label2 />
@@ -2386,8 +2402,8 @@
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="4">
-			<property name="id">$NUMBER[4]</property>
+		<item id="5">
+			<property name="id">$NUMBER[5]</property>
 			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[20389]</label>
 			<label2 />
@@ -2401,8 +2417,8 @@
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="5">
-			<property name="id">$NUMBER[5]</property>
+		<item id="6">
+			<property name="id">$NUMBER[6]</property>
 			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[19020]</label>
 			<label2 />
@@ -2416,8 +2432,8 @@
 			<visible>String.IsEqual(System.ProfileName,Master user)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="6">
-			<property name="id">$NUMBER[6]</property>
+		<item id="7">
+			<property name="id">$NUMBER[7]</property>
 			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[15016]</label>
 			<label2 />
@@ -2430,8 +2446,8 @@
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),shortcuts)</visible>
 			<property name="isSubmenu">True</property>
 			</item>
-		<item id="7">
-			<property name="id">$NUMBER[7]</property>
+		<item id="8">
+			<property name="id">$NUMBER[8]</property>
 			<property name="mainmenuid">12</property>
 			<label>$LOCALIZE[24001]</label>
 			<label2 />
@@ -2441,22 +2457,6 @@
 			<onclick>Action(Close)</onclick>
 			<property name="path">Action(Close)</property>
 			<onclick>ActivateWindow(addonbrowser,return)</onclick>
-			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),shortcuts)</visible>
-			<property name="isSubmenu">True</property>
-			</item>
-		<item id="8">
-			<property name="id">$NUMBER[8]</property>
-			<property name="mainmenuid">12</property>
-			<label>$LOCALIZE[137]</label>
-			<label2 />
-			<icon>special://skin/extras/icons/search.png</icon>
-			<thumb />
-			<property name="labelID">137</property>
-			<onclick condition="true">Skin.SetString(SearchTerm)</onclick>
-			<property name="path">Skin.SetString(SearchTerm)</property>
-			<onclick condition="true">ActivateWindow(1112)</onclick>
-			<onclick>Action(Close)</onclick>
-			<onclick>ActivateWindow(1112)</onclick>
 			<visible>[String.IsEqual(System.ProfileName,Master user)] + String.IsEqual(Window(10000).Property(submenuVisibility),shortcuts)</visible>
 			<property name="isSubmenu">True</property>
 			</item>

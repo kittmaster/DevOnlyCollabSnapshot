@@ -19,13 +19,13 @@
 				<control type="label">
 					<visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Next_Aired)) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Last_Aired))</visible>
 					<include>MediaFlagLabelFull</include>
-					<label>$VAR[TVShowAirDateLabelVar]</label>
+					<!-- <label>$VAR[TVShowAirDateLabelVar]</label> -->
 				</control>
 				<control type="label">
 					<visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Status))</visible>
 					<width>135.5</width>
 					<include>MediaFlagLabel</include>
-					<label>$VAR[NextAiredStausLabelVar]</label>
+					<label>$VAR[NextAiredStatusLabelVar]</label>
 				</control>
 				<control type="image">
 					<visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Status))</visible>
@@ -79,7 +79,7 @@
 					<visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Status))</visible>
 					<width>135.5</width>
 					<include>MediaFlagLabel</include>
-					<label>$VAR[NextAiredStausLabelVar]</label>
+					<label>$VAR[NextAiredStatusLabelVar]</label>
 				</control>
 				<control type="image">
 					<visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Status))</visible>
@@ -685,7 +685,7 @@
 					<visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Status))</visible>
 					<width>135.5</width>
 					<include>MediaFlagLabel</include>
-					<label>$VAR[NextAiredStausLabelVar]</label>
+					<label>$VAR[NextAiredStatusLabelVar]</label>
 				</control>
 				<control type="image">
 					<visible>!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Status))</visible>
@@ -1072,7 +1072,6 @@
 				<texture>$VAR[MediaFlagsPathVar]mpaa/$VAR[VideoPlayerRatingFlagVar]</texture>
 				<include>MediaFlagImage</include>
 			</control>
-
 			<!-- CMB -->
 			<control type="image">
 				<visible>String.Contains(Player.Filename,"web-dl") | 
@@ -1085,14 +1084,14 @@
 			<control type="image">
 				<visible>String.Contains(Player.Filename,"uhd")</visible>
 				<texture>$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]uhd.png</texture>
-				<include>MediaFlagImage</include>			
-			</control>		
+				<include>MediaFlagImage</include>
+			</control>
 			<control type="image">
 				<visible>String.Contains(Player.Filename,"hdr")</visible>
 				<texture>$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]hdr.png</texture>
-				<include>MediaFlagImage</include>	
+				<include>MediaFlagImage</include>
 			</control>
-			<!-- CMB -->		
+			<!-- CMB -->
 			<control type="image">
 				<visible>!String.IsEmpty(VideoPlayer.VideoCodec)</visible>
 				<texture>$VAR[PlayerVideoCodecFlagVar]</texture>
@@ -1138,8 +1137,9 @@
 			</control>
 		</control>
 	</include>
-	<include name="MediaFlagsVideoInfo">
+		<include name="MediaFlagsVideoInfo">
 		<control type="grouplist">
+			<visible>!String.IsEqual(ListItem.Property(item.type),person) + !Control.HasFocus(1050) + !Control.HasFocus(1060) + !Control.HasFocus(1070) + !Control.HasFocus(1080) + !Control.HasFocus(1090)</visible>
 			<bottom>25</bottom>
 			<height>80</height>
 			<align>left</align>
@@ -1166,7 +1166,7 @@
 				<visible>[String.IsEqual(ListItem.DBTYPE,tvshow) | String.IsEqual(ListItem.DBTYPE,season)] + [!Control.HasFocus(1020) + !Control.HasFocus(1090) + !Control.HasFocus(1040)] + [!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Next_Aired)) | !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Last_Aired))]</visible>
 				<width>135.5</width>
 				<include>MediaFlagLabel</include>
-				<label>$VAR[NextAiredStausLabelVar]</label>
+				<label>$VAR[NextAiredStatusLabelVar]</label>
 			</control>
 			<control type="image">
 				<visible>[String.IsEqual(ListItem.DBTYPE,tvshow) | String.IsEqual(ListItem.DBTYPE,season)] + [!Control.HasFocus(1020) + !Control.HasFocus(1090) + !Control.HasFocus(1040)] + !String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Status))</visible>
@@ -1202,11 +1202,9 @@
 				<texture>$VAR[Container7005VideoCodecFlagVar]</texture>
 				<include>MediaFlagImage</include>
 			</control>
-			<include content="ResolutionFlags"> <!-- CMB resolution -->
-				<!-- <param name="resolutionvisible">!ControlGroup(9001).HasFocus | Control.HasFocus(50)</param> -->
-				<!-- <param name="resolutionvisible">(Container(9000).HasFocus(112) + String.IsEqual(ListItem.Property(item.type), person)) + (!ControlGroup(9001).HasFocus + Control.HasFocus(50))</param> -->
-				<!-- <param name="resolutionvisible">Container(9000).HasFocus(112) + String.IsEqual(ListItem.Property(item.type), person) + !ControlGroup(9001).HasFocus + Control.HasFocus(50)</param> -->
-				<param name="resolutionvisible">[!Container(9000).HasFocus | Control.HasFocus(50)] + [Container(9000).HasFocus(112) | !String.IsEqual(ListItem.Property(item.type),person)]</param>
+			<include content="ResolutionFlags">
+				<!-- Add TV Shows to prevent resolution flag turning up in video panel during TV Shows video panel is active -->
+				<param name="resolutionvisible">[!ControlGroup(9001).HasFocus | Control.HasFocus(50)] + !String.IsEqual(ListItem.DBTYPE,tvshow)</param>
 			</include>
 			<include content="ResolutionFlags">
 				<param name="container">Container.ListItem</param>
@@ -1551,7 +1549,7 @@
 	</include>
 	<include name="MediaFlagAudioWhite">
 		<font>Font25_Cond_Bold</font>
-		<textcolor>55ffffff</textcolor>
+		<textcolor>55ffffff</textcolor>ListItem
 	</include>
 	<include name="MediaFlagAudioColored">
 		<font>Font25_Cond_Bold</font>
@@ -1561,21 +1559,29 @@
 
 	<!-- Variables -->
 	<variable name="TVShowAirDateLabelVar">
+		<value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Next_Aired) + !Skin.HasSetting(PanelTextTVShows.color))">[COLOR $INFO[Skin.String(PanelTextTVShows.color)]]$INFO[Window(Home).Property(TMDbHelper.ListItem.Next_Aired.Season)]$INFO[Window(Home).Property(TMDbHelper.ListItem.Next_Aired.Episode),x, ]$LOCALIZE[31063][B][CR]$INFO[Window(Home).Property(TMDbHelper.ListItem.Next_Aired)][/B][/COLOR]</value>
+		<value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Last_Aired) + !Skin.HasSetting(PanelTextTVShows.color))">[COLOR $INFO[Skin.String(PanelTextTVShows.color)]]$INFO[Window(Home).Property(TMDbHelper.ListItem.Last_Aired.Season)]$INFO[Window(Home).Property(TMDbHelper.ListItem.Last_Aired.Episode),x, ]$LOCALIZE[31064][B][CR]$INFO[Window(Home).Property(TMDbHelper.ListItem.Last_Aired)][/B][/COLOR]</value>
 		<value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Next_Aired))">$INFO[Window(Home).Property(TMDbHelper.ListItem.Next_Aired.Season)]$INFO[Window(Home).Property(TMDbHelper.ListItem.Next_Aired.Episode),x, ]$LOCALIZE[31063][B][CR]$INFO[Window(Home).Property(TMDbHelper.ListItem.Next_Aired)][/B]</value>
 		<value condition="!String.IsEmpty(Window(Home).Property(TMDbHelper.ListItem.Last_Aired))">$INFO[Window(Home).Property(TMDbHelper.ListItem.Last_Aired.Season)]$INFO[Window(Home).Property(TMDbHelper.ListItem.Last_Aired.Episode),x, ]$LOCALIZE[31064][B][CR]$INFO[Window(Home).Property(TMDbHelper.ListItem.Last_Aired)][/B]</value>
 	</variable>
-	<variable name="TVShowEmbuaryAirDateLabelVar">
-		<value condition="!String.IsEmpty(Container(10051).ListItem.Property(NextEpisode_date))">$INFO[Container(10051).ListItem.Property(NextEpisode_season)]$INFO[Container(10051).ListItem.Property(NextEpisode_number),x, ]$LOCALIZE[31064][B][CR]$INFO[Container(10051).ListItem.Property(NextEpisode_date)][/B]</value>
-		<value condition="!String.IsEmpty(Container(10051).ListItem.Property(LastEpisode_date))">$INFO[Container(10051).ListItem.Property(LastEpisode_season)]$INFO[Container(10051).ListItem.Property(LastEpisode_number),x, ]$LOCALIZE[31064][B][CR]$INFO[Container(10051).ListItem.Property(LastEpisode_date)][/B]</value>
+	<variable name="NextAiredStatusLabelVar">
+		<!-- Clips status word "Returning Soon down to Returning to fit icon width" -->
+		<value condition="String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.Status),Returning)">[COLOR $INFO[Skin.String(PanelTextTVShows.color)]]$LOCALIZE[31011][/COLOR]</value>
+		<value condition="String.Contains(Window(Home).Property(TMDbHelper.ListItem.Status),Returning)">[COLOR $INFO[Skin.String(PanelTextTVShows.color)]]$LOCALIZE[31011][/COLOR]</value>
+		<value condition="String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.Status),Returning) + !Skin.HasSetting(PanelTextTVShows.color)">$LOCALIZE[31011]</value>
+		<value condition="String.Contains(Window(Home).Property(TMDbHelper.ListItem.Status),Returning) + !Skin.HasSetting(PanelTextTVShows.color)">$LOCALIZE[31011]</value>
+		<value>[COLOR $INFO[Skin.String(PanelTextTVShows.color)]]$INFO[Window(Home).Property(TMDbHelper.ListItem.Status)][/COLOR]</value>
 	</variable>
-	<variable name="NextAiredEmbuaryStausLabelVar">
-		<value condition="String.StartsWith(Container(10051).ListItem.Status,Returning)">$LOCALIZE[31011]</value>
-		<value>$INFO[Container(10051).ListItem.Status]</value>
-	</variable>
-	<variable name="NextAiredStausLabelVar">
-		<value condition="String.StartsWith(Window(Home).Property(TMDbHelper.ListItem.Status),Returning)">$LOCALIZE[31011]</value>
-		<value>$INFO[Window(Home).Property(TMDbHelper.ListItem.Status)]</value>
-	</variable>
+
+	<!-- <variable name="TVShowEmbuaryAirDateLabelVar">  -->	<!-- DEPRECATED -->
+		<!-- <value condition="!String.IsEmpty(Container(10051).ListItem.Property(NextEpisode_date))">$INFO[Container(10051).ListItem.Property(NextEpisode_season)]$INFO[Container(10051).ListItem.Property(NextEpisode_number),x, ]$LOCALIZE[31064][B][CR]$INFO[Container(10051).ListItem.Property(NextEpisode_date)][/B]</value> -->
+		<!-- <value condition="!String.IsEmpty(Container(10051).ListItem.Property(LastEpisode_date))">$INFO[Container(10051).ListItem.Property(LastEpisode_season)]$INFO[Container(10051).ListItem.Property(LastEpisode_number),x, ]$LOCALIZE[31064][B][CR]$INFO[Container(10051).ListItem.Property(LastEpisode_date)][/B]</value> -->
+	<!-- </variable> -->
+	<!-- <variable name="NextAiredEmbuaryStausLabelVar"> -->	<!-- DEPRECATED -->
+		<!-- <value condition="String.StartsWith(Container(10051).ListItem.Status,Returning)">$LOCALIZE[31011]</value> -->
+		<!-- <value>$INFO[Container(10051).ListItem.Status]</value> -->
+	<!-- </variable> -->
+
 	<variable name="StudioIconsVar">
 		<value condition="String.IsEqual(ListItem.DBTYPE,set) + !Skin.HasSetting(MediaFlagsColored)">flags/default/set.png</value>
 		<value condition="String.IsEqual(ListItem.DBTYPE,set) + Skin.HasSetting(MediaFlagsColored)">flags/colored/set.png</value>
@@ -1595,12 +1601,11 @@
 		<value condition="!String.IsEmpty(ListItem.Studio) + !Skin.HasSetting(MediaFlagsColored)">$INFO[ListItem.Studio,resource://resource.images.studios.white/,.png]</value>
 		<value condition="!String.IsEmpty(ListItem.Studio) + Skin.HasSetting(MediaFlagsColored)">$INFO[ListItem.Studio,resource://resource.images.studios.coloured/,.png]</value>
 	</variable>
-	<variable name="EmbuaryStudioIconsVar"> 	<!-- cmb -->
+	<variable name="TMDBHelperStudioIconsVar">		<!-- cmb -->
 		<value condition="!String.IsEmpty(Container(10051).ListItem.Property(Network.1.Name)) + !Skin.HasSetting(MediaFlagsColored)">$INFO[Container(10051).ListItem.Property(Network.1.Name),resource://resource.images.studios.white/,.png]</value>
 		<value condition="!String.IsEmpty(Container(10051).ListItem.Property(Network.1.Name)) + Skin.HasSetting(MediaFlagsColored)">$INFO[Container(10051).ListItem.Property(Network.1.Name),resource://resource.images.studios.coloured/,.png]</value>
 		<value condition="!String.IsEmpty(Container(10051).ListItem.Property(Studio.1.Name)) + !Skin.HasSetting(MediaFlagsColored)">$INFO[Container(10051).ListItem.Property(Studio.1.Name),resource://resource.images.studios.white/,.png]</value>
 		<value condition="!String.IsEmpty(Container(10051).ListItem.Property(Studio.1.Name)) + Skin.HasSetting(MediaFlagsColored)">$INFO[Container(10051).ListItem.Property(Studio.1.Name),resource://resource.images.studios.coloured/,.png]</value>
-	
 		<!-- <value condition="!String.IsEmpty(Container(10051).ListItem.Property(Network.0)) + !Skin.HasSetting(MediaFlagsColored)">$INFO[Container(10051).ListItem.Property(Network.0),resource://resource.images.studios.white/,.png]</value> -->
 		<!-- <value condition="!String.IsEmpty(Container(10051).ListItem.Property(Network.0)) + Skin.HasSetting(MediaFlagsColored)">$INFO[Container(10051).ListItem.Property(Network.0),resource://resource.images.studios.coloured/,.png]</value> -->
 		<!-- <value condition="!String.IsEmpty(Container(10051).ListItem.Property(Studio.0)) + !Skin.HasSetting(MediaFlagsColored)">$INFO[Container(10051).ListItem.Property(Studio.0),resource://resource.images.studios.white/,.png]</value> -->
@@ -1657,18 +1662,6 @@
 		<value>$INFO[ListItem.MPAA,,.png]</value>
 		<!-- <value>NR.png</value> -->
 	</variable>
-
-
-
-
-	
-	
-	
-	
-
-
-
-
 	<variable name="Container7005RatingFlagVar">
 		<value condition="String.Contains(Container.ListItem.MPAA,NR)">NR.png</value>
 		<value condition="String.Contains(Container.ListItem.MPAA,US:G) | String.Contains(Container.ListItem.MPAA,USA:G) | String.Contains(Container.ListItem.MPAA,Rated G) | String.Contains(Container.ListItem.MPAA,Rated Approved) | String.Contains(Container.ListItem.MPAA,Rated Passed)">G.png</value>
@@ -1728,7 +1721,7 @@
 	<variable name="VideoCodecFlagVar">
 		<value condition="!Skin.HasSetting(SourceFlags)">$VAR[MediaFlagsPathVar]$INFO[ListItem.VideoCodec,videocodec/,.png]</value>
 		<value condition="String.IsEqual(ListItem.VideoResolution,4k) | String.Contains(ListItem.Filename,UHD)">$VAR[MediaFlagsPathVar]videocodec/4kuhd.png</value>
-<!-- 		<value condition="String.IsEqual(VideoPlayer.VideoResolution,4k) + 
+		<!-- 		<value condition="String.IsEqual(VideoPlayer.VideoResolution,4k) + 
 						  [String.Contains(Player.Filename,bluray)       |
 		  				   String.Contains(Player.Filename,blu-ray)      | 
 						   String.Contains(Player.Filename,bdrip)        | 
@@ -1758,7 +1751,7 @@
 		<value condition="String.Contains(Container(7005).ListItem.Filename,dvd) | String.IsEqual(Container(7005).ListItem.FileExtension,iso) | String.IsEqual(Container(7005).ListItem.FileExtension,ifo)">$VAR[MediaFlagsPathVar]videocodec/dvd.png</value>
 		<value>$VAR[MediaFlagsPathVar]$INFO[Container(7005).ListItem.VideoCodec,videocodec/,.png]</value>
 	</variable>
-	<variable name="PlayerVideoCodecFlagVar">  <!-- Main Menu (Videos) Player VIDEOCODEC Flags -->
+	<variable name="PlayerVideoCodecFlagVar">		<!-- Main Menu (Videos) Player VIDEOCODEC Flags -->
 		<value condition="!Skin.HasSetting(SourceFlags)">$VAR[MediaFlagsPathVar]$INFO[VideoPlayer.VideoCodec,videocodec/,.png]</value>
 		<value condition="String.IsEqual(VideoPlayer.VideoResolution,4k) + 
 						  [String.Contains(Container.ListItem,bluray)       |
@@ -1769,36 +1762,28 @@
 						   String.Contains(Container.ListItem,uhd)		     |
 						   String.Contains(Container.ListItem,hdr)		     |
 						   String.IsEqual(Player.FileExtension,bdmv)]">$VAR[MediaFlagsPathVar]videocodec/4kuhd.png</value>
-
 		<value condition="String.IsEqual(VideoPlayer.VideoResolution,4k) + 
 						  String.Contains(Player.Filename,264)">$VAR[MediaFlagsPathVar]videocodec/h264.png</value>
-
 		<value condition="String.IsEqual(VideoPlayer.VideoResolution,1080) | 
 						  String.IsEqual(VideoPlayer.VideoResolution,720)">$VAR[MediaFlagsPathVar]videocodec/bluray.png</value>
-
 		<value condition="Integer.IsLessOrEqual(ListItem.VideoResolution,540) + 
 						  String.Contains(Player.Filename,480) | 
 						  String.Contains(Player.Filename,360)">$VAR[MediaFlagsPathVar]videocodec/x264.png</value>
-
 		<value condition="Player.IsStereoscopic | String.Contains(Player.Filename,3D)">$VAR[MediaFlagsPathVar]videocodec/bluray3d.png</value>
 		<value condition="String.Contains(Player.Filename,pdtv)  | 
 						  String.Contains(Player.Filename,sdtv)  |
 						  String.Contains(Player.Filename,sd-tv) | 
 						  String.Contains(Player.Filename,sd tv)">$VAR[MediaFlagsPathVar]videocodec/sdtv.png</value>
-
 		<value condition="String.Contains(Player.Filename,hdtv)  | 
 						  String.Contains(Player.Filename,hd-tv) |
 						  String.Contains(Player.Filename,hd tv)">$VAR[MediaFlagsPathVar]videocodec/hdtv.png</value>
-
 		<value condition="String.Contains(Player.Filename,hddvd) | String.Contains(Player.Filename,hd-dvd)">$VAR[MediaFlagsPathVar]videocodec/hddvd.png</value>
-
 		<value condition="String.Contains(Player.Filename,dvd)      | 
 						  String.IsEqual (Player.FileExtension,iso) | 
 						  String.IsEqual (Player.FileExtension,ifo)">$VAR[MediaFlagsPathVar]videocodec/dvd.png</value>
-
 		<value>$VAR[MediaFlagsPathVar]$INFO[VideoPlayer.VideoCodec,videocodec/,.png]</value>
 	</variable>
-	<variable name="VideoResolutionFlagVar"> <!-- Media VIDEORESOLUTION Flags -->
+	<variable name="VideoResolutionFlagVar">		<!-- Media Video Resolution Flags -->
 		<value condition="String.Contains(Player.Filename,288) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]288.png</value>
 		<value condition="String.Contains(Player.Filename,360) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]360.png</value>
 		<value condition="String.Contains(Player.Filename,480) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]480.png</value>
@@ -1807,16 +1792,16 @@
 		<value condition="String.Contains(Player.Filename,720) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]720.png</value>
 		<value condition="String.Contains(Player.Filename,1080)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]1080.png</value>
 		<value condition="String.Contains(Player.Filename,2160)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]4kuhd.png</value>
-		<value condition="String.Contains(Player.Filename,4K)  ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]4kuhd.png</value>		
+		<value condition="String.Contains(Player.Filename,4K)  ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]4kuhd.png</value>
 		<value condition="String.IsEqual(ListItem.VideoResolution,4K) + String.Contains(ListItem.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]4kremux.png</value>
 		<value condition="Integer.IsLess(ListItem.VideoResolution,720) + String.Contains(ListItem.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]sdremux.png</value>
 		<value condition="String.Contains(ListItem.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]hdremux.png</value>
 		<value condition="!String.IsEmpty(ListItem.VideoResolution)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]$INFO[ListItem.VideoResolution,,.png]</value>
 		<!-- <value>$VAR[MediaFlagsPathVar]$INFO[ListItem.VideoResolution,videoresolution/,.png]</value> -->
 		<!-- <value>$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]$INFO[ListItem.VideoResolution].png</value> -->
-		<value>flags/default/videoresolution/Video-Res-Not-Found-X.png</value> 
+		<value>flags/default/videoresolution/Video-Res-Not-Found-X.png</value>
 	</variable>
-	<variable name="Container7005VideoResolutionFlagVar"> <!-- Media VIDEORESOLUTION Flags -->
+	<variable name="Container7005VideoResolutionFlagVar">		<!-- Media Video Resolution Flags -->
 		<value condition="String.Contains(Container(7005).Player.Filename,288) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]288.png</value>
 		<value condition="String.Contains(Container(7005).Player.Filename,360) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]360.png</value>
 		<value condition="String.Contains(Container(7005).Player.Filename,480) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]480.png</value>
@@ -1825,7 +1810,7 @@
 		<value condition="String.Contains(Container(7005).Player.Filename,720) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]720.png</value>
 		<value condition="String.Contains(Container(7005).Player.Filename,1080)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]1080.png</value>
 		<value condition="String.Contains(Container(7005).Player.Filename,2160)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]4kuhd.png</value>
-		<value condition="String.Contains(Container(7005).Player.Filename,4K)  ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]4kuhd.png</value>	
+		<value condition="String.Contains(Container(7005).Player.Filename,4K)  ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]4kuhd.png</value>
 		<value condition="String.IsEqual(Container(7005).ListItem.VideoResolution,4K) + String.Contains(Container(7005).ListItem.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]4kremux.png</value>
 		<value condition="Integer.IsLess(Container(7005).ListItem.VideoResolution,720) + String.Contains(Container(7005).ListItem.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]sdremux.png</value>
 		<value condition="String.Contains(Container(7005).ListItem.Filename,remux)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]hdremux.png</value>
@@ -1834,7 +1819,7 @@
 		<value condition="!String.IsEmpty(Container(7005).ListItem.VideoResolution)">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]$INFO[Container(7005).ListItem.VideoResolution,,.png]</value>
 		<value>flags/default/videoresolution/Video-Res-Not-Found-X.png</value>
 	</variable>
-	<variable name="PlayerVideoResolutionFlagVar"> <!-- Main Menu > Videos > Media VIDEORESOLUTION Flags -->
+	<variable name="PlayerVideoResolutionFlagVar">		<!-- Main Menu > Videos > Media Player Info Panel Dropdown  Video Resolution Flags <Keyboard I> -->
 		<value condition="String.Contains(Player.Filename,288) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]288.png</value>
 		<value condition="String.Contains(Player.Filename,360) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]360.png</value>
 		<value condition="String.Contains(Player.Filename,480) ">$VAR[MediaFlagsPathVar]videoresolution/$VAR[MediaFlagsPathExpandedResolutionVar]480.png</value>
@@ -1900,19 +1885,10 @@
 		<value condition="Container.Content(artists)">$LOCALIZE[132]</value>
 		<value condition="Container.Content(albums)">$LOCALIZE[134]</value>
 	</variable>
-
-	<!-- This is the original variable, no change to what is shown below -->
-<!-- 	<variable name="MediaFlagsPathVar">
-		<value condition="Skin.HasSetting(MediaFlagsColored)">flags/colored/</value>
-		<value>flags/default/</value>
-	</variable> -->
-
-
 	<variable name="MediaFlagsPathVar">
 		<value condition="Skin.HasSetting(MediaFlagsColored)">flags/colored/</value>
 		<value>flags/default/</value>
 	</variable>
-
 	<variable name="MediaFlagsPathExpandedResolutionVar">
 		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),red)">1-Red/</value>
 		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),orange)">2-Orange/</value>
@@ -1925,7 +1901,6 @@
 		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),turquoise)">9-Turquoise/</value>
 		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagResolutionColorSettingsValue),brown)">10-Brown/</value>
 	</variable>
-
 	<variable name="MediaFlagsPathExpandedAspectRatioVar">
 		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),red)">1-Red/</value>
 		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),orange)">2-Orange/</value>
@@ -1938,10 +1913,6 @@
 		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),turquoise)">9-Turquoise/</value>
 		<value condition="Skin.HasSetting(MediaFlagsColored) + String.Contains(Skin.String(MediaFlagAspectRatioColorSettingsValue),brown)">10-Brown/</value>
 	</variable>
-
-	
-
-
 	<variable name="VideoPlayerStudioIconsVar">
 		<value condition="!String.IsEmpty(VideoPlayer.Studio) + !Skin.HasSetting(MediaFlagsColored)">$INFO[VideoPlayer.Studio,resource://resource.images.studios.white/,.png]</value>
 		<value condition="!String.IsEmpty(VideoPlayer.Studio) + Skin.HasSetting(MediaFlagsColored)">$INFO[VideoPlayer.Studio,resource://resource.images.studios.coloured/,.png]</value>
@@ -1996,74 +1967,6 @@
 		<value condition="!String.IsEmpty(VideoPlayer.MPAA)">$INFO[VideoPlayer.MPAA,,.png]</value>
 		<value>NR.png</value>
 	</variable>
-
-
-	<variable name="EmbuaryInfoRatingFlagVar">
-	<value condition="String.Contains(ListItem.MPAA,Rated R) | String.Contains(ListItem.MPAA,US:R) | String.Contains(ListItem.MPAA,USA:R) | String.IsEqual(ListItem.MPAA,R)">R.png</value>
-
-		<value condition="String.IsEmpty(Container(10051).ListItem.MPAA) | String.Contains(Container(10051).ListItem.MPAA,NR) | String.IsEqual(Container(10051).ListItem.MPAA,Rated) | String.IsEqual(Container(10051).ListItem.MPAA,Rated ) | String.IsEqual(Container(10051).ListItem.MPAA,Not Rated)">NR.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,US:R) | String.Contains(Container(10051).ListItem.MPAA,USA:R) | String.IsEqual(Container(10051).ListItem.MPAA,Rated R) | String.IsEqual(Container(10051).ListItem.MPAA,R)">R.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,US:NC-17) | String.Contains(Container(10051).ListItem.MPAA,USA:NC-17) | String.IsEqual(Container(10051).ListItem.MPAA,Rated NC-17) | String.IsEqual(Container(10051).ListItem.MPAA,NC-17)">NC-17.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,US:PG-13) | String.Contains(Container(10051).ListItem.MPAA,USA:PG-13) | String.IsEqual(Container(10051).ListItem.MPAA,Rated PG-13) | String.IsEqual(Container(10051).ListItem.MPAA,PG-13)">PG-13.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,US:PG) | String.Contains(Container(10051).ListItem.MPAA,USA:PG) | String.IsEqual(Container(10051).ListItem.MPAA,Rated PG) | String.IsEqual(Container(10051).ListItem.MPAA,PG)">PG.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,US:G) | String.Contains(Container(10051).ListItem.MPAA,USA:G) | String.IsEqual(Container(10051).ListItem.MPAA,Rated G) | String.IsEqual(Container(10051).ListItem.MPAA,G) | String.IsEqual(Container(10051).ListItem.MPAA,Rated Approved) | String.IsEqual(Container(10051).ListItem.MPAA,Approved) | String.IsEqual(Container(10051).ListItem.MPAA,Rated Passed) | String.IsEqual(Container(10051).ListItem.MPAA,Passed)">G.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,UK:U)| String.Contains(Container(10051).ListItem.MPAA,United Kingdom:U)">BBFC_U_Certificate_UK.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,UK:PG) | String.Contains(Container(10051).ListItem.MPAA,United Kingdom:PG)"> BBFC_PG_Certificate_UK.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,UK:12A) | String.Contains(Container(10051).ListItem.MPAA,United Kingdom:12A)">BBFC_12A_Certificate_UK.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,UK:12) | String.Contains(Container(10051).ListItem.MPAA,United Kingdom:12)">BBFC_12_Certificate_UK.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,UK:15) | String.Contains(Container(10051).ListItem.MPAA,United Kingdom:15)">BBFC_15_Certificate_UK.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,UK:18) | String.Contains(Container(10051).ListItem.MPAA,United Kingdom:18)">BBFC_18_Certificate_UK.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,Germany:16) | String.Contains(Container(10051).ListItem.MPAA,ab 16) | String.IsEqual(Container(10051).ListItem.MPAA,16) | String.Contains(Container(10051).ListItem.MPAA,FSK 16) | String.Contains(Container(10051).ListItem.MPAA,Rated 16)">FSK-16.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,Germany:0) | String.Contains(Container(10051).ListItem.MPAA,ab 0) | String.IsEqual(Container(10051).ListItem.MPAA,0) | String.Contains(Container(10051).ListItem.MPAA,FSK 0) | String.Contains(Container(10051).ListItem.MPAA,Rated 0)">FSK-0.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,Germany:6) | String.Contains(Container(10051).ListItem.MPAA,ab 6) | String.IsEqual(Container(10051).ListItem.MPAA,6) | String.Contains(Container(10051).ListItem.MPAA,FSK 6) | String.Contains(Container(10051).ListItem.MPAA,Rated 6)">FSK-6.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,Germany:12) | String.Contains(Container(10051).ListItem.MPAA,ab 12) | String.IsEqual(Container(10051).ListItem.MPAA,12) | String.Contains(Container(10051).ListItem.MPAA,FSK 12) | String.Contains(Container(10051).ListItem.MPAA,Rated 12)">FSK-12.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,Germany:18) | String.Contains(Container(10051).ListItem.MPAA,ab 18) | String.IsEqual(Container(10051).ListItem.MPAA,18) | String.Contains(Container(10051).ListItem.MPAA,FSK 18) | String.Contains(Container(10051).ListItem.MPAA,Rated 18)">FSK-18.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,Germany) |String.Contains(Container(10051).ListItem.MPAA,FSK) | String.Contains(Container(10051).ListItem.MPAA,o.A) | String.Contains(Container(10051).ListItem.MPAA,Rated 0)">FSK-0.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,besorolás alatt)">HU_BA.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,korhatárra való tekintett nélkül megtekintetheto)">HU_KN.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,12 éven aluliak számára a megtekintése nagykorú felügyelete mellett ajánlott)">HU_12.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,16 éven aluliak számára nem ajánlott)">HU_16.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,18 éven aluliak számára nem ajánlott)">HU_18.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,FR-U) | String.Contains(Container(10051).ListItem.MPAA,FR-TP) | String.Contains(Container(10051).ListItem.MPAA,France:U) | String.Contains(Container(10051).ListItem.MPAA,Tout public) | String.Contains(Container(10051).ListItem.MPAA,partir de 3 ans) | String.Contains(Container(10051).ListItem.MPAA,partir de 6 ans)">csaU.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,FR-10) | String.Contains(Container(10051).ListItem.MPAA,France:-10) | String.Contains(Container(10051).ListItem.MPAA,Interdit aux moins de 10 ans) | String.Contains(Container(10051).ListItem.MPAA,des propos ou des images peuvent heurter)">csa10.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,FR-12) | String.Contains(Container(10051).ListItem.MPAA,France:-12) | String.Contains(Container(10051).ListItem.MPAA,Interdit aux moins de 12 ans)">csa12.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,FR-16) | String.Contains(Container(10051).ListItem.MPAA,France:-16) | String.Contains(Container(10051).ListItem.MPAA,Interdit aux moins de 16 ans)">csa16.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,FR-18) | String.Contains(Container(10051).ListItem.MPAA,France:-18) | String.Contains(Container(10051).ListItem.MPAA,Interdit aux moins de 18 ans)">csa18.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,전체)">KR_Certificate_All.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,12세)">KR_Certificate_12.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,15세)">KR_Certificate_15.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,불가)">KR_Certificate_18.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,제한)">KR_Certificate_R.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,Brazil:Livre) | String.Contains(Container(10051).ListItem.MPAA,Livre)">MPAA_Brazil_Livre.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,Brazil:10) | String.Contains(Container(10051).ListItem.MPAA,10 anos)">MPAA_Brazil_10.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,Brazil:12) | String.Contains(Container(10051).ListItem.MPAA,12 anos)">MPAA_Brazil_12.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,Brazil:14) | String.Contains(Container(10051).ListItem.MPAA,14 anos)">MPAA_Brazil_14.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,Brazil:16) | String.Contains(Container(10051).ListItem.MPAA,16 anos)">MPAA_Brazil_16.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,Brazil:18) | String.Contains(Container(10051).ListItem.MPAA,18 anos)">MPAA_Brazil_18.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,Australia:R) | String.Contains(Container(10051).ListItem.MPAA,Australia:R18)">australia_R.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,Australia:MA) | String.Contains(Container(10051).ListItem.MPAA,Australia:MA15)">australia_MA.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,Australia:M)">australia_M.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,Australia:PG)">australia_PG.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,Australia:G)">australia_G.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,NL:AL)">NL-AL.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,NL:6)">NL-6.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,NL:9)">NL-9.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,NL:12)">NL-12.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,NL:16)">NL-16.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,NL:18)">NL-18.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,GR:K)">GR-K.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,GR:8)">GR-8.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,GR:12)">GR-12.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,GR:16)">GR-16.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,GR:18)">GR-18.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,DK:A) | String.Contains(Container(10051).ListItem.MPAA,Denmark:A)">MCCYP_Denmark-A.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,DK:7) | String.Contains(Container(10051).ListItem.MPAA,Denmark:7)">MCCYP_Denmark-7.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,DK:11) | String.Contains(Container(10051).ListItem.MPAA,Denmark:11)">MCCYP_Denmark-11.png</value>
-		<value condition="String.Contains(Container(10051).ListItem.MPAA,DK:15) | String.Contains(Container(10051).ListItem.MPAA,Denmark:15)">MCCYP_Denmark-15.png</value>
-		<value>$INFO[Container(10051).ListItem.MPAA,,.png]</value>
-	</variable>
-
-
 	<variable name="ContainerAlbumLabelVar">
 		<value condition="String.IsEqual(ListItem.DBTYPE,artist) + !String.IsEmpty(Container(1010).ListItem.Property(Album_Label))">$INFO[Container(1010).ListItem.Property(Album_Label),resource://resource.images.recordlabels.white/,.png]</value>
 		<value condition="String.IsEqual(ListItem.DBTYPE,musicvideo) + !String.IsEmpty(Container(1060).ListItem.Property(Album_Label))">$INFO[Container(1060).ListItem.Property(Album_Label),resource://resource.images.recordlabels.white/,.png]</value>
