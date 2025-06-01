@@ -1002,7 +1002,7 @@ msgstr ""
 
 #: /16x9/Includes_InfoDialogs.xml
 msgctxt "#31197"
-msgid "Known For"
+msgid "Most recognized as"
 msgstr ""
 
 #: /16x9/Variables.xml
@@ -2118,6 +2118,26 @@ msgstr ""
 #: /16x9/Includes_Settings.xml
 msgctxt "#31420"
 msgid "Display larger DPI scaled logo when Kodi first loads. Large logo: 1600x520px, Small logo: 800x260px. Kodi will auto-scale in windowed view."
+msgstr ""
+
+#: /16x9/SkinSettings.xml
+msgctxt "#31421"
+msgid "Turn on saving to debug log"
+msgstr ""
+
+#: /16x9/Includes_Settings.xml
+msgctxt "#31422"
+msgid "Off by default, leave this setting off unless troubleshooting instructed to turn on. This will cause your debug log and device cache to increase rapidly and could cause instability if left unchecked. You have been notified."
+msgstr ""
+
+#: /16x9/Includes_CustomSelect.xml
+msgctxt "#31423"
+msgid "Fanart background size ratio"
+msgstr ""
+
+#: /16x9/Includes_CustomSelect.xml
+msgctxt "#31424"
+msgid "Sets the size ratio of the fanart background. Scale/Keep/Center:	Aspect ratio is kept. Stretch: Aspect ratio is not kept."
 msgstr ""
 
 #: /16x9/Includes_Settings.xml
