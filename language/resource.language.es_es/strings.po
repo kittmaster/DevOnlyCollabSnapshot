@@ -6,60 +6,61 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: "
-"Language-Team: \n"
-"Language: es_ES\n"
+"PO-Revision-Date: 2025-06-10 09:29+0000\n"
+"Last-Translator: Alfonso Cachero <alfonso.cachero@gmail.com>\n"
+"Language-Team: Spanish (Spain) <https://kodi.weblate.cloud/projects/"
+"kodi-add-ons-skins/skin-madnox/es_es/>\n"
+"Language: es_es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.1\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 5.11.4\n"
 
 #: /16x9/DialogAddonSettings.xml /16x9/Variables.xml /16x9/DialogTextViewer.xml /16x9/Custom_1100_TextViewer.xml /16x9/script-skin_helper_service-ColorPicker.xml
 msgctxt "#31000"
 msgid "Page"
-msgstr ""
+msgstr "Página"
 
 #: /16x9/DialogAddonSettings.xml /16x9/DialogMediaSource.xml /16x9/Includes_CommonObjects.xml /16x9/Variables.xml /16x9/DialogFavourites.xml /16x9/Includes_Dialogs.xml /16x9/Custom_1110_CustomSelectConatainer.xml /16x9/DialogSettings.xml /16x9/DialogSubtitles.xml
 msgctxt "#31001"
 msgid "Items"
-msgstr ""
+msgstr "Elementos"
 
 #: /16x9/Home.xml /16x9/Variables.xml /16x9/Custom_1111_Topbar.xml
 msgctxt "#31002"
 msgid "Now playing"
-msgstr ""
+msgstr "Reproduciendo"
 
 #: /16x9/SmartPlaylistEditor.xml
 msgctxt "#31003"
 msgid "Order"
-msgstr ""
+msgstr "Orden"
 
 #: /16x9/Includes_MediaMenu.xml
 msgctxt "#31004"
 msgid "Weather background"
-msgstr ""
+msgstr "Fondo de clima"
 
 #: /16x9/SkinSettings.xml
 msgctxt "#31005"
 msgid "shadow"
-msgstr ""
+msgstr "sombra"
 
 #: /16x9/Variables_Themes.xml
 msgctxt "#31006"
 msgid "Flat"
-msgstr ""
+msgstr "Plano"
 
 #: /16x9/Includes_CustomSelect.xml /16x9/Includes_MediaMenu.xml
 msgctxt "#31007"
 msgid "Single image"
-msgstr ""
+msgstr "Imágen única"
 
 #: /16x9/Includes_CustomSelect.xml /16x9/Includes_MediaMenu.xml
 msgctxt "#31008"
 msgid "Multi image"
-msgstr ""
+msgstr "Imagen multiple"
 
 #: /16x9/Includes_MediaMenu.xml /16x9/Includes_MediaMenu.xml
 msgctxt "#31009"
